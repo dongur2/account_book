@@ -32,11 +32,13 @@
     <br/>
 
    ````
-   git commit -am '{commit_message}' // 작업 내용 스테이징 & 커밋 메세지 작성 
+   git add . // 모든 작업 내용 스테이징
+   git commit -m '{commit_message}' // 커밋 메세지 작성 
    git push origin {지금까지 작업한 브랜치 이름} // 원격 저장소에 작업 내용 push
 
    예: 
-   git commit -am 'Feat: 캘린더 각 날짜별 수입/지출 금액 표시 기능 추가'
+   git add .
+   git commit -m 'Feat: 캘린더 각 날짜별 수입/지출 금액 표시 기능 추가'
    git push origin calendar
    ````
 
