@@ -12,7 +12,7 @@
     {
       "id": 2,
       "type": "expense",
-      "incomeCategory": "pin",
+      "expenseCategory": "pin",
       "title": "5월 수입2",
       "desc": "메모2",
       "amount": "2500000",
@@ -75,7 +75,7 @@
     {
       "id": 9,
       "type": "expense",
-      "incomeCategory": "pin",
+      "expenseCategory": "pin",
       "title": "6월 수입2",
       "desc": "메모2",
       "amount": "3000000",
