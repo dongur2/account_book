@@ -39,15 +39,17 @@ export const useCalendarAccountStore = defineStore('summaryList', () => {
             if (income > 0) {
                 summary.push({
                     date,
-                    title: `총수입: ${income}원`,
-                    type: 'income'
+                    title: `+${income}원`,
+                    type: 'income',
+                    className: 'income-event'
                 });
             }
             if (expense > 0) {
                 summary.push({
                     date,
-                    title: `총지출: ${expense}원`,
-                    type: 'expense'
+                    title: `-${expense}원`,
+                    type: 'expense',
+                    className: 'expense-event'
                 });
             }
         });    

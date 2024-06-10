@@ -125,6 +125,15 @@
       "desc": "메모4",
       "amount": "530000",
       "date": "2024-06-30"
+    },
+    {
+      "id": 15,
+      "type": "income",
+      "IncomeCategory": "etc",
+      "title": "6월 수입",
+      "desc": "메모5",
+      "amount": "930000",
+      "date": "2024-06-30"
     }
   ]
 }
