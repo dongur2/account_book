@@ -16,6 +16,7 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
+
 export default {
   components: {
     FullCalendar // make the <FullCalendar> tag available

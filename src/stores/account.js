@@ -1,9 +1,9 @@
-import { ref, computed } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-export const useAccountListStore = defineStore('account', () => {
-  // const BASEURI = '/api/';
+export const useAccountListStore = defineStore('accountList', () => {
+  const BASEURI = '/api/account';
   const state = reactive({ accountList: [] });
 
   const fetchAccountList = async () => {
