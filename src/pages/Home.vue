@@ -30,36 +30,13 @@
       </div>
     </div>
   </div>
-  <div
-    class="container"
-    style="
-      display: flex;
-
-      flex-direction: row;
-
-      background-color: white;
-      border-radius: 10px;
-      margin-top: 20px;
-    "
-  >
-    Add
-  </div>
-  <div
-    class="container"
-    style="
-      display: flex;
-
-      flex-direction: row;
-
-      background-color: white;
-      border-radius: 10px;
-      margin-top: 20px;
-    "
-  >
-    List
+  <div>
+    <!-- inputIncomeExpense -->
+    <InputIncomeExpense />
   </div>
 </template>
 
 <script setup>
 import PieChart from '@/components/PieChart.vue';
+import InputIncomeExpense from '@/components/InputIncomeExpense.vue';
 </script>
