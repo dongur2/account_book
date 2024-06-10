@@ -16,13 +16,20 @@
       </div>
     </div>
   </div>
+
+  <div>
+    <!-- inputIncomeExpense -->
+    <InputIncomeExpense />
   <div class="container">
     <div>Add</div>
+
   </div>
   <div class="container"><AccountList></AccountList></div>
 </template>
 
 <script setup>
 import PieChart from '@/components/PieChart.vue';
+
+import InputIncomeExpense from '@/components/InputIncomeExpense.vue';
 import AccountList from '../components/AccountList.vue';
 </script>
