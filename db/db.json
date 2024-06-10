@@ -1,0 +1,130 @@
+{
+    "account": [
+      {
+        "id": 1,
+        "type": "income",
+        "incomeCategory": "salary",
+        "title": "5월 수입1",
+        "desc": "메모1",
+        "amount": "5000000",
+        "date": "2024-05-01"
+      },
+      {
+        "id": 2,
+        "type": "expense",
+        "incomeCategory": "pin",
+        "title": "5월 수입2",
+        "desc": "메모2",
+        "amount": "2500000",
+        "date": "2024-05-10"
+      },
+      {
+        "id": 3,
+        "type": "income",
+        "incomeCategory": "etc",
+        "title": "5월 수입3",
+        "desc": "메모3",
+        "amount": "550000",
+        "date": "2024-05-20"
+      },
+      {
+        "id": 4,
+        "type": "expense",
+        "expenseCategory": "fixed",
+        "title": "5월 지출1",
+        "desc": "메모1",
+        "amount": "550000",
+        "date": "2024-05-13"
+      },
+      {
+        "id": 5,
+        "type": "expense",
+        "expenseCategory": "culture",
+        "title": "5월 지출2",
+        "desc": "메모2",
+        "amount": "15000",
+        "date": "2024-05-25"
+      },
+      {
+        "id": 6,
+        "type": "expense",
+        "expenseCategory": "life",
+        "title": "5월 지출3",
+        "desc": "메모3",
+        "amount": "9000",
+        "date": "2024-05-26"
+      },
+      {
+        "id": 7,
+        "type": "expense",
+        "expenseCategory": "etc",
+        "title": "5월 지출4",
+        "desc": "메모4",
+        "amount": "3500",
+        "date": "2024-05-30"
+      },
+      {
+        "id": 8,
+        "type": "income",
+        "incomeCategory": "salary",
+        "title": "6월 수입1",
+        "desc": "메모1",
+        "amount": "8500000",
+        "date": "2024-06-01"
+      },
+      {
+        "id": 9,
+        "type": "expense",
+        "incomeCategory": "pin",
+        "title": "6월 수입2",
+        "desc": "메모2",
+        "amount": "3000000",
+        "date": "2024-06-10"
+      },
+      {
+        "id": 10,
+        "type": "income",
+        "incomeCategory": "etc",
+        "title": "6월 수입3",
+        "desc": "메모3",
+        "amount": "250000",
+        "date": "2024-06-20"
+      },
+      {
+        "id": 11,
+        "type": "expense",
+        "expenseCategory": "fixed",
+        "title": "6월 지출1",
+        "desc": "메모1",
+        "amount": "550000",
+        "date": "2024-06-13"
+      },
+      {
+        "id": 12,
+        "type": "expense",
+        "expenseCategory": "culture",
+        "title": "6월 지출2",
+        "desc": "메모2",
+        "amount": "175000",
+        "date": "2024-06-25"
+      },
+      {
+        "id": 13,
+        "type": "expense",
+        "expenseCategory": "life",
+        "title": "6월 지출3",
+        "desc": "메모3",
+        "amount": "768700",
+        "date": "2024-06-26"
+      },
+      {
+        "id": 14,
+        "type": "expense",
+        "expenseCategory": "etc",
+        "title": "6월 지출4",
+        "desc": "메모4",
+        "amount": "530000",
+        "date": "2024-06-30"
+      }
+    ]
+  }

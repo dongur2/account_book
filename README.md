@@ -43,7 +43,7 @@
    ````
 
 5. `push` 후 웹페이지에서 <u>**Pull Request**</u> 작성
-    - 원본 `repo:dev`으로 PR 
+    - 원본 `repo:main`으로 PR 
     - 템플릿 맞춰서 작성: 주요 작업 사항 입력
 
 6. `PR Merge` 후 원본 Repo의 새로운 커밋들을 본인 로컬 Repo로 `pull`
@@ -56,7 +56,7 @@
 
     6-2. 본인 로컬 Repo로 `pull`
     ````
-    git pull upstream dev
+    git pull upstream main
     ````
 
     6-3. 본인 원격 Repo로 `push`
