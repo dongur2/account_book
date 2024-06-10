@@ -20,9 +20,9 @@
   <div>
     <!-- inputIncomeExpense -->
     <InputIncomeExpense />
+  </div>
   <div class="container">
     <div>Add</div>
-
   </div>
   <div class="container"><AccountList></AccountList></div>
 </template>
