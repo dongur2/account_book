@@ -1,25 +1,18 @@
 <template>
   <div
     class="container"
-    style="
-      display: flex;
-      flex: 1;
-      flex-direction: row;
-      justify-content: space-between;
-    "
+    style="flex: 1; justify-content: space-between; background-color: #fcda76"
   >
-    <div style="display: flex; align-items: center">
-      <span style="font-style: italic; font-size: 50px; font-weight: 700"
-        >curretnMonth{{
-      }}</span>
+    <div>
+      <span>curretnMonth{{}}</span>
       <button type="button" class="btn" @click="goToPage">
-        <i :class="iconClass()" style="font-size: 3rem"></i>
+        <i :class="iconClass()"></i>
       </button>
     </div>
-    <div style="display: flex; align-items: center">
-      <i class="bi bi-chevron-double-left" style="font-size: 3rem"></i>
-      <i class="bi bi-house" style="font-size: 3rem"></i>
-      <i class="bi bi-chevron-double-right" style="font-size: 3rem"></i>
+    <div>
+      <i class="bi bi-chevron-double-left"></i>
+      <i class="bi bi-house"></i>
+      <i class="bi bi-chevron-double-right"></i>
     </div>
   </div>
 </template>
