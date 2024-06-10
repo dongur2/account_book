@@ -94,7 +94,7 @@ watch(summaryList, (newSummaryList) => {
   flex-direction: column;
 }
 /* 금액 오른쪽 정렬 */
-.fc-daygrid-day-events {
+.fc-daygrid-day-events, .fc-daygrid-event-harness {
   margin-left:auto;
 }
 

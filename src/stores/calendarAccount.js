@@ -1,6 +1,7 @@
 import { ref, computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { moneyFormat } from '@/utils/moneyFormat';
 
 export const useCalendarAccountStore = defineStore('summaryList', () => {
   const BASEURI = '/api/account';
@@ -39,7 +40,7 @@ export const useCalendarAccountStore = defineStore('summaryList', () => {
             if (income > 0) {
                 summary.push({
                     date,
-                    title: `+${income}원`,
+                    title: `+ ${moneyFormat(income)}`,
                     type: 'income',
                     className: 'income-event'
                 });
@@ -47,7 +48,7 @@ export const useCalendarAccountStore = defineStore('summaryList', () => {
             if (expense > 0) {
                 summary.push({
                     date,
-                    title: `-${expense}원`,
+                    title: `- ${moneyFormat(expense)}`,
                     type: 'expense',
                     className: 'expense-event'
                 });
