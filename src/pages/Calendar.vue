@@ -1,49 +1,72 @@
 <template>
 
-    <FullCalendar :options="calendarOptions"     
+    <FullCalendar :options="state.calendarOptions"    
       style="
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       background-color: white;
       border-radius: 10px;
       margin: 20px 5%;
+      height:100%;
+      padding:45px 50px 25px 50px;
     "/>
-
 </template>
 
-<script>
+
+<script setup>
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
-export default {
-  components: {
-    FullCalendar // make the <FullCalendar> tag available
-  },
-  data() {
-    return {
-      calendarOptions: {
-        plugins: [ dayGridPlugin, interactionPlugin ],
-        initialView: 'dayGridMonth',
-        dateClick: this.handleDateClick,
-        events: [
-          { title: 'event 1', date: '2024-06-01' },
-          { title: 'event 2', date: '2024-06-02' },
-          { title: 'Meeting', start: new Date() }
-        ],
-        showNonCurrentDates: true,
-        headerToolbar: {
-          start: 'title', // will normally be on the left. if RTL, will be on the right
+import { reactive, computed, watch } from 'vue'
+import { useAccountListStore } from '@/stores/account.js'
+
+const accountListStore = useAccountListStore();
+const accountList = computed(() => accountListStore.accountList); //읽기 전용 반응형 ref 객체 반환
+
+const { fetchAccountList } = accountListStore;
+
+const state = reactive({
+  calendarOptions: {
+    headerToolbar: {
+          left: 'title',
           center: '',
-          end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
-        }
-      }
-    }
+          right: 'prev,next today'
+    },
+    events: [],
+    plugins: [ dayGridPlugin, interactionPlugin ],
+    initialView: 'dayGridMonth',
+    showNonCurrentDates: true,
   },
-  methods: {
-    handleDateClick: function(arg) {
-      alert('date click! ' + arg.dateStr)
-    }
-  }
-}
+})
+
+fetchAccountList();
+
+//수입,지출목록 변경 시 캘린더 이벤트 업데이트
+watch(accountList, (newAccountList) => {
+  state.calendarOptions.events = newAccountList;
+});
+
 </script>
+
+
+<style>
+/* 년월 */
+#fc-dom-1402 {
+  font-size:1.8rem;
+  font-weight:bolder;
+}
+
+/* 월 이동 버튼 */
+.fc .fc-button-primary {
+  background-color:white;
+  color:black;
+  border: white;
+}
+
+/* today 비활성 */
+.fc .fc-button-primary:disabled {
+  background-color:#4A483F;
+  color:white
+}
+</style>
