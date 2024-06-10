@@ -19,12 +19,12 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
 import { reactive, computed, watch } from 'vue'
-import { useAccountListStore } from '@/stores/account.js'
+import { useCalendarAccountStore } from '@/stores/calendarAccount'
 
-const accountListStore = useAccountListStore();
-const accountList = computed(() => accountListStore.accountList); //읽기 전용 반응형 ref 객체 반환
+const calendarAccountStore = useCalendarAccountStore();
+const summaryList = computed(() => calendarAccountStore.summaryList); //읽기 전용 반응형 ref 객체 반환
 
-const { fetchAccountList } = accountListStore;
+const { fetchSummaryList } = calendarAccountStore;
 
 const state = reactive({
   calendarOptions: {
@@ -40,11 +40,11 @@ const state = reactive({
   },
 })
 
-fetchAccountList();
+fetchSummaryList();
 
 //수입,지출목록 변경 시 캘린더 이벤트 업데이트
-watch(accountList, (newAccountList) => {
-  state.calendarOptions.events = newAccountList;
+watch(summaryList, (newSummaryList) => {
+  state.calendarOptions.events = newSummaryList;
 });
 
 </script>
