@@ -18,11 +18,6 @@
         <i :class="iconClass()" style="font-size: 3rem"></i>
       </button>
     </div>
-    <div style="display: flex; align-items: center">
-      <i class="bi bi-chevron-double-left" style="font-size: 3rem"></i>
-      <i class="bi bi-house" style="font-size: 3rem"></i>
-      <i class="bi bi-chevron-double-right" style="font-size: 3rem"></i>
-    </div>
   </div>
 </template>
 
