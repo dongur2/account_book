@@ -47,6 +47,9 @@
   <div>
     <!-- InputIncomeExpense 컴포넌트 -->
     <InputIncomeExpense />
+    <div class="container">
+      <div>Add</div>
+    </div>
   </div>
 
   <!-- 계좌 목록 섹션 -->
