@@ -20,11 +20,7 @@
   <div>
     <!-- inputIncomeExpense -->
     <InputIncomeExpense />
-    <div class="container">
-      <div>Add</div>
-    </div>
   </div>
-
   <div class="container">
     <AccountList />
   </div>
