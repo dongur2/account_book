@@ -1,9 +1,9 @@
 <template>
-  <ul class="list-group" style="width: 100%">
+  <ul class="list-group" style="width: 100%; ">
     <div
       v-for="(items, month) in groupedData"
       :key="month"
-      style="flex-direction: column"
+      style="flex-direction: column ;"
     >
       <h2>{{ getMonthString(month) }}</h2>
       <button type="button" class="btn">
