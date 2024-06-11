@@ -42,6 +42,8 @@ export const useCalendarAccountStore = defineStore('summaryList', () => {
                     date,
                     title: `+ ${moneyFormat(income)}`,
                     type: 'income',
+                    amount: income,
+                    datetime: date,
                     className: 'income-event'
                 });
             }
@@ -50,6 +52,8 @@ export const useCalendarAccountStore = defineStore('summaryList', () => {
                     date,
                     title: `- ${moneyFormat(expense)}`,
                     type: 'expense',
+                    amount: expense,
+                    datetime: date,
                     className: 'expense-event'
                 });
             }
