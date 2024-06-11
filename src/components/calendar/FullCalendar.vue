@@ -27,6 +27,11 @@ const state = reactive({
     plugins: [ dayGridPlugin, interactionPlugin ],
     initialView: 'dayGridMonth',
     showNonCurrentDates: true,
+    dateClick: (arg) => alert(`${arg.dateStr}`), // alert 클릭한 날짜
+    eventClick: (arg) => {
+        let eventProps = arg.event._def.extendedProps;
+        alert(`type: ${eventProps.type}, amount: ${eventProps.amount}, datetime: ${eventProps.datetime}`)
+    } // extendedProps: type, amount, datetime
   },
 })
 
@@ -46,7 +51,6 @@ watch(summaryList, (newSummaryList) => {
     flex-direction: column;
     background-color: white;
     border-radius: 10px;
-    /* margin: 20px 12%; */
     margin-top:20px;
     height:100%;
     padding:45px 50px 25px 50px;
