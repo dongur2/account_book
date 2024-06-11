@@ -1,18 +1,19 @@
 <template>
-  <div class="row">
-    <div class="col">
-      <ul class="list-group">
-        <div v-for="(items, month) in groupedData" :key="month">
-          <h2>{{ getMonthString(month) }}</h2>
-          <div class="row">
-            <div class="col" v-for="accountItem in items" :key="accountItem.id">
-              <AccountItem :accountItem="accountItem"></AccountItem>
-            </div>
-          </div>
-        </div>
-      </ul>
+  <ul class="list-group" style="width: 100%">
+    <div
+      v-for="(items, month) in groupedData"
+      :key="month"
+      style="flex-direction: column"
+    >
+      <h2>{{ getMonthString(month) }}</h2>
+      <button type="button" class="btn">
+        <i class="bi bi-house"></i>
+      </button>
+      <div class="col" v-for="accountItem in items" :key="accountItem.id">
+        <AccountItem :accountItem="accountItem"></AccountItem>
+      </div>
     </div>
-  </div>
+  </ul>
 </template>
 
 <script setup>
@@ -24,11 +25,12 @@ import AccountItem from '@/components/AccountItem.vue';
 const accountListStore = useAccountListStore();
 const { fetchTodoList } = accountListStore;
 
-// accountList를 가져오기
 const accountList = computed(() => accountListStore.accountList);
 
 function getMonthString(month) {
-  return month.slice(5) + '월';
+  const year = month.slice(0, 4); // YYYY 추출
+  const monthPart = month.slice(5); // MM 추출
+  return `${year} - ${monthPart}`; // "YYYY년 MM월" 형식으로 반환
 }
 
 // groupByMonth 함수 정의
