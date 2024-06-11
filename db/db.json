@@ -11,8 +11,8 @@
     },
     {
       "id": 2,
-      "type": "expense",
-      "expenseCategory": "pin",
+      "type": "income",
+      "incomeCategory": "pin",
       "title": "5월 수입2",
       "desc": "메모2",
       "amount": "2500000",
@@ -74,8 +74,8 @@
     },
     {
       "id": 9,
-      "type": "expense",
-      "expenseCategory": "pin",
+      "type": "income",
+      "incomeCategory": "pin",
       "title": "6월 수입2",
       "desc": "메모2",
       "amount": "3000000",
@@ -124,6 +124,15 @@
       "title": "6월 지출4",
       "desc": "메모4",
       "amount": "530000",
+      "date": "2024-06-30"
+    },
+    {
+      "id": 15,
+      "type": "income",
+      "IncomeCategory": "etc",
+      "title": "6월 수입",
+      "desc": "메모5",
+      "amount": "930000",
       "date": "2024-06-30"
     }
   ]
