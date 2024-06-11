@@ -9,6 +9,10 @@
       padding: 0;
     "
   >
+    <div style="flex: 1; align-items: center;">
+      <p>{{ accountItem.date }}</p>
+    </div>
+
     <div style="flex: 1">
       <span>
         <span class="badge text-bg-secondary">
