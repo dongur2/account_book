@@ -33,7 +33,7 @@
       <button type="button" class="btn">
         <i class="bi bi-house"></i>
       </button>
-      <button type="button" class="btn">
+      <button type="button" class="btn" @click="deleteAccountHandler(accountItem.id)">
         <i class="bi bi-house"></i>
       </button>
     </div>
@@ -54,4 +54,12 @@ defineProps({
 
 const router = useRouter();
 const accountListStore = useAccountListStore();
+
+/* 목록 제거 */
+const { deleteAccount } = accountListStore;
+const deleteAccountHandler = (id) => {
+  if(confirm('해당 항목을 삭제하시겠습니까?')) {
+    deleteAccount(id);
+  }
+}
 </script>

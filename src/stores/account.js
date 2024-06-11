@@ -50,14 +50,13 @@ export const useAccountListStore = defineStore('accountList', () => {
   /* 
    * 목록 삭제
    */
-  const deleteAccount = async (id, successCallBack) => {
+  const deleteAccount = async (id) => {
     try {
       const res = await axios.delete(`${BASEURI}/${id}`); // delete
 
-      if(res.data.state === 'success') {
+      if(res.status === 200) {
         let idx = state.accountList.findIndex((item) => item.id === id);
         state.accountList.splice(idx, 1); // local delete & rendering
-        successCallBack();
 
       } else {
         console.log('Failed to delete');
