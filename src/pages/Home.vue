@@ -21,7 +21,7 @@
     <!-- inputIncomeExpense -->
     <InputIncomeExpense />
   </div>
-  <div class="container">
+  <div class="container" style="background-color: #fcda76; padding: 0">
     <AccountList />
   </div>
 </template>
