@@ -23,19 +23,19 @@ export const useAccountListStore = defineStore('accountList', () => {
   /* 
    * 목록 수정 
    */
-  const modifyAccount = async ({id, type, category, title, desc, amount, date}, successCallBack) => {
+  const modifyAccount = async ({id, type, category, title, desc, amount, date}) => {
     try {
-      const payload = {};
+      let payload = {};
       if (type === 'income') payload = {id, type, incomeCategory: category, title, desc, amount, date};
       else payload = {id, type, expenseCategory: category, title, desc, amount, date};
 
+      console.log('payload: ', payload);
       const res = await axios.put(`${BASEURI}/${id}`, payload); // PUT
       
-      if(res.data.state === 'success') {
+      if(res.status === 200) {
           let idx = state.accountList.findIndex((item) => item.id === id);
           if(idx > -1) {
             state.accountList[idx] = payload; // local update & rendering
-            successCallBack();
 
           } else throw Exception('None');
 
