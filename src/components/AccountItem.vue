@@ -91,6 +91,7 @@ import { useCalendarAccountStore } from '@/stores/calendarAccount'; //calendar
 import { moneyFormat } from '../utils/moneyFormat';
 import { ref } from 'vue'
 
+// 컴포넌트 속성 정의
 defineProps({
   accountItem: {
     type: Object,
@@ -98,7 +99,10 @@ defineProps({
   },
 });
 
+// 라우터 사용
 const router = useRouter();
+
+// 스토어 사용
 const accountListStore = useAccountListStore();
 const calendarAccountStore = useCalendarAccountStore(); //calendar
 
