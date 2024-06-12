@@ -45,6 +45,7 @@ import { useRouter } from 'vue-router';
 import { useAccountListStore } from '@/stores/account.js';
 import { moneyFormat } from '../utils/moneyFormat';
 
+// 컴포넌트 속성 정의
 defineProps({
   accountItem: {
     type: Object,
@@ -52,6 +53,9 @@ defineProps({
   },
 });
 
+// 라우터 사용
 const router = useRouter();
+
+// 스토어 사용
 const accountListStore = useAccountListStore();
 </script>

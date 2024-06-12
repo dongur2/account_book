@@ -25,14 +25,22 @@
       <!-- 수입/지출 정보 -->
       <!-- 수입/지출 정보 -->
       <div style="flex: 2">
-        <div class="amount" style="flex: 1; justify-content: center">
-          수입:income{{}}
+        <div
+          class="amount"
+          style="flex: 1; justify-content: center"
+          @click="showIncomes"
+        >
+          수입:income
         </div>
-        <div class="amount" style="flex: 1; justify-content: center">
-          지출:expense{{}}
+        <div
+          class="amount"
+          style="flex: 1; justify-content: center"
+          @click="showExpenses"
+        >
+          지출:expense
         </div>
       </div>
-      
+
       <!-- 카테고리 및 금액 정보 -->
       <hr class="my-3" />
       <!-- 카테고리 및 금액 정보 -->
@@ -65,6 +73,17 @@
 import PieChart from '@/components/PieChart.vue';
 import InputIncomeExpense from '@/components/InputIncomeExpense.vue';
 import AccountList from '../components/AccountList.vue';
+import { useAccountListStore } from '../stores/account.js';
+
+const accountListStore = useAccountListStore();
+
+const showExpenses = () => {
+  accountListStore.updateChartData('expense');
+};
+
+const showIncomes = () => {
+  accountListStore.updateChartData('income');
+};
 </script>
 <style>
 button {
