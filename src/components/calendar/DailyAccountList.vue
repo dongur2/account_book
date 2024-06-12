@@ -5,7 +5,6 @@
         :key="month"
         style="flex-direction: column"
       >
-        <h2>{{ getMonthString(month) }}</h2>
         <div class="col" v-for="accountItem in items" :key="accountItem.id">
           <AccountItem :accountItem="accountItem" style="background-color: #fefefe;"></AccountItem>
         </div>
@@ -19,14 +18,6 @@
   import AccountItem from '@/components/AccountItem.vue';
   
   const accountListStore = useAccountListStore();
-  const { fetchAccountList } = accountListStore;
-  
-  
-  function getMonthString(month) {
-    const year = month.slice(0, 4); // YYYY 추출
-    const monthPart = month.slice(5); // MM 추출
-    return `${year} - ${monthPart}`; // "YYYY년 MM월" 형식으로 반환
-  }
   
   function groupByMonth(data) {
     return data.reduce((acc, item) => {
