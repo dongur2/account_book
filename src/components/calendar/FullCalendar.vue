@@ -10,11 +10,14 @@ import interactionPlugin from '@fullcalendar/interaction'
 
 import { reactive, computed, watch } from 'vue'
 import { useCalendarAccountStore } from '@/stores/calendarAccount'
+import { useAccountListStore } from '@/stores/account'
 
 const calendarAccountStore = useCalendarAccountStore();
+const accontListStore = useAccountListStore();
 const summaryList = computed(() => calendarAccountStore.summaryList); //읽기 전용 반응형 ref 객체 반환
 
 const { fetchSummaryList } = calendarAccountStore;
+const { fetchDailyAccountList } = accontListStore;
 
 const state = reactive({
   calendarOptions: {
@@ -27,13 +30,17 @@ const state = reactive({
     plugins: [ dayGridPlugin, interactionPlugin ],
     initialView: 'dayGridMonth',
     showNonCurrentDates: true,
-    dateClick: (arg) => alert(`${arg.dateStr}`), // alert 클릭한 날짜
-    eventClick: (arg) => {
-        let eventProps = arg.event._def.extendedProps;
-        alert(`type: ${eventProps.type}, amount: ${eventProps.amount}, datetime: ${eventProps.datetime}`)
-    } // extendedProps: type, amount, datetime
+    dateClick: showDailyAccountList,
+    eventClick: showDailyAccountListWithEvt,
   },
 })
+
+function showDailyAccountList(arg) {
+  fetchDailyAccountList(arg.dateStr);
+}
+function showDailyAccountListWithEvt(arg) {
+  fetchDailyAccountList(arg.event._def.extendedProps.datetime);
+}
 
 fetchSummaryList();
 

@@ -70,7 +70,6 @@ export const useCalendarAccountStore = defineStore('summaryList', () => {
   };
 
   const summaryList = computed(() => state.summaryList);
-  const isLoading = computed(() => state.isLoading);
 
-  return { summaryList, isLoading, fetchSummaryList };
+  return { summaryList, fetchSummaryList };
 });
