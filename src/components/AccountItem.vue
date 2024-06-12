@@ -11,7 +11,8 @@
   >
 
     <div v-if="isModifying" style="flex: 1; align-items: center">
-      <select name="type" v-model="accountItem.type">
+      <select name="type" v-model="accountItem.type" 
+      @change="accountItem.incomeCategory = 'salary'; accountItem.expenseCategory = 'fixed'">
         <option value="income">수입</option>
         <option value="expense">지출</option>
       </select>
@@ -37,13 +38,13 @@
       </span>
     </div>
     <div v-else style="flex: 1; align-items: center">
-      <select v-if="accountItem.type === 'income'" name="incomeCategory" v-model="accountItem.incomeCategory">
+      <select v-if="accountItem.type === 'income'" name="category" v-model="accountItem.incomeCategory">
         <option value="salary">근로소득</option>
         <option value="pin">용돈</option>
         <option value="etc">기타</option>
       </select>
 
-      <select v-else name="expenseCategory" v-model="accountItem.expenseCategory">
+      <select v-else name="category" v-model="accountItem.expenseCategory">
         <option value="fixed">고정지출</option>
         <option value="culture">문화생활</option>
         <option value="life">생활비</option>
@@ -55,21 +56,21 @@
       <p>{{ accountItem.title }}</p>
     </div>
     <div v-else style="flex: 1; align-items: center">
-      <input type="text" v-model="accountItem.title">
+      <input type="text" v-model="accountItem.title" placeholder="내역을 입력하세요">
     </div>
 
     <div v-if="!isModifying" style="flex: 1; align-items: center">
       <p>{{ accountItem.desc }}</p>
     </div>
     <div v-else style="flex: 1; align-items: center">
-      <input type="text" v-model="accountItem.desc">
+      <input type="text" v-model="accountItem.desc" placeholder="메모를 입력하세요(선택)">
     </div>
 
     <div v-if="!isModifying" style="flex: 1; align-items: center">
       <p>{{ moneyFormat(accountItem.amount) }}</p>
     </div>
     <div v-else style="flex: 1; align-items: center">
-      <input type="text" v-model="accountItem.amount">
+      <input type="text" v-model="accountItem.amount" placeholder="금액을 입력하세요">
     </div>
 
     <div style="flex: 1; align-items: center; justify-content: end">
@@ -116,9 +117,7 @@ const changeInput = () => {
 }
 
 const modifyAccountHandler = (item) => {
-    console.log(item);
     modifyAccount(item);
-
     isModifying.value = false;
 }
 

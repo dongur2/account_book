@@ -23,13 +23,12 @@ export const useAccountListStore = defineStore('accountList', () => {
   /* 
    * 목록 수정 
    */
-  const modifyAccount = async ({id, type, category, title, desc, amount, date}) => {
+  const modifyAccount = async ({id, type, incomeCategory, expenseCategory, title, desc, amount, date}) => {
     try {
       let payload = {};
-      if (type === 'income') payload = {id, type, incomeCategory: category, title, desc, amount, date};
-      else payload = {id, type, expenseCategory: category, title, desc, amount, date};
+      if (type === 'income') payload = {id, type, incomeCategory, title, desc, amount, date};
+      else payload = {id, type, expenseCategory, title, desc, amount, date};
 
-      console.log('payload: ', payload);
       const res = await axios.put(`${BASEURI}/${id}`, payload); // PUT
       
       if(res.status === 200) {
