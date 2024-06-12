@@ -1,14 +1,24 @@
 <template>
   <li
-    class="list-group-item"
+    class="list-group-item hover"
     style="
-      background-color: #fcda76;
-      border: none;
       display: flex;
+      border: 1px solid red;
+      background-color: #fefefe;
       width: 100%;
-      padding: 0;
+      border-radius: 5px;
+      padding: 5px;
     "
   >
+    <!-- 날짜 -->
+    <div v-if="!isModifying" style="flex: 1; align-items: center">
+      <p>{{ accountItem.date }}</p>
+    </div>
+    <div v-else style="flex: 1; align-items: center">
+      <input type="date" v-model="accountItem.date" class="form-control" />
+    </div>
+
+    <!-- 분류 -->
     <div v-if="isModifying" style="flex: 1; align-items: center">
       <select
         name="type"
@@ -17,28 +27,23 @@
           accountItem.incomeCategory = 'salary';
           accountItem.expenseCategory = 'fixed';
         "
+        class="form-select"
       >
         <option value="income">수입</option>
         <option value="expense">지출</option>
       </select>
     </div>
 
-    <div v-if="!isModifying" style="flex: 1; align-items: center">
-      <p>{{ accountItem.date }}</p>
-    </div>
-    <div v-else style="flex: 1; align-items: center">
-      <input type="date" v-model="accountItem.date" />
-    </div>
-
+    <!-- 카테고리 -->
     <div v-if="!isModifying" style="flex: 1">
-      <span>
-        <span class="badge text-bg-secondary">
+      <span style="margin: 0px; display: flex; align-items: center">
+        <p class="badge bg-secondary">
           {{
             accountItem.type === 'income'
               ? accountItem.incomeCategory
               : accountItem.expenseCategory
           }}
-        </span>
+        </p>
       </span>
     </div>
     <div v-else style="flex: 1; align-items: center">
@@ -46,13 +51,19 @@
         v-if="accountItem.type === 'income'"
         name="category"
         v-model="accountItem.incomeCategory"
+        class="form-select"
       >
         <option value="salary">근로소득</option>
         <option value="pin">용돈</option>
         <option value="etc">기타</option>
       </select>
 
-      <select v-else name="category" v-model="accountItem.expenseCategory">
+      <select
+        v-else
+        name="category"
+        v-model="accountItem.expenseCategory"
+        class="form-select"
+      >
         <option value="fixed">고정지출</option>
         <option value="culture">문화생활</option>
         <option value="life">생활비</option>
@@ -60,7 +71,8 @@
       </select>
     </div>
 
-    <div v-if="!isModifying" style="flex: 1; align-items: center">
+    <!-- 내용 -->
+    <div v-if="!isModifying" style="flex: 2; align-items: center">
       <p>{{ accountItem.title }}</p>
     </div>
     <div v-else style="flex: 1; align-items: center">
@@ -68,45 +80,55 @@
         type="text"
         v-model="accountItem.title"
         placeholder="내역을 입력하세요"
+        class="form-control"
       />
     </div>
 
-    <div v-if="!isModifying" style="flex: 1; align-items: center">
+    <!-- 메모 -->
+    <div v-if="!isModifying" style="flex: 3; align-items: center">
       <p>{{ accountItem.desc }}</p>
     </div>
-    <div v-else style="flex: 1; align-items: center">
+    <div v-else style="flex: 3; align-items: center">
       <input
         type="text"
         v-model="accountItem.desc"
         placeholder="메모를 입력하세요(선택)"
+        class="form-control"
       />
     </div>
 
+    <!-- 금액 -->
     <div v-if="!isModifying" style="flex: 1; align-items: center">
-      <p>{{ moneyFormat(accountItem.amount) }}</p>
+      <p :style="{ color: accountItem.type === 'income' ? 'green' : 'red' }">
+        {{ moneyFormat(accountItem.amount) }}
+      </p>
     </div>
     <div v-else style="flex: 1; align-items: center">
       <input
         type="text"
         v-model="accountItem.amount"
         placeholder="금액을 입력하세요"
+        class="form-control"
       />
     </div>
 
+    <!-- 버튼(수정, 삭제) -->
     <div style="flex: 1; align-items: center; justify-content: end">
+      <!-- 수정 버튼 -->
       <button
         type="button"
         class="btn"
         @click="isModifying ? modifyAccountHandler(accountItem) : changeInput()"
       >
-        수정
+        <i class="fa-solid fa-pen"></i>
       </button>
+      <!-- 삭제 버튼 -->
       <button
         type="button"
         class="btn"
         @click="deleteAccountHandler(accountItem.id)"
       >
-        삭제
+        <i class="fa-solid fa-trash-can"></i>
       </button>
     </div>
   </li>
@@ -167,3 +189,20 @@ const modifyAccountHandler = (item) => {
   }
 };
 </script>
+
+<style scoped>
+* {
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 0;
+  /* border: 1px solid blue; */
+}
+
+/* 한 덩어리 전체 */
+.list-group-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+</style>

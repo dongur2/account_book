@@ -63,7 +63,7 @@
   </div>
 
   <!-- 계좌 목록 섹션 -->
-  <div class="container">
+  <div class="container" style="background-color: #fefefe">
     <!-- AccountList 컴포넌트 -->
     <AccountList />
   </div>

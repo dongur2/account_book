@@ -2,10 +2,10 @@
   "account": [
     {
       "id": "1",
-      "type": "income",
-      "incomeCategory": "salary",
+      "type": "expense",
+      "expenseCategory": "fixed",
       "title": "5월 수입1",
-      "desc": "메모1",
+      "desc": "메모바꿔",
       "amount": "5000000",
       "date": "2024-05-01"
     },
@@ -146,12 +146,12 @@
     },
     {
       "id": "f86c",
-      "type": "income",
-      "title": "돈벌었당",
+      "type": "expense",
+      "expenseCategory": "fixed",
+      "title": "돈썼당",
       "desc": "",
       "amount": "12121212",
-      "date": "2024-06-19",
-      "incomeCategory": "salary"
+      "date": "2024-06-19"
     }
   ]
 }
