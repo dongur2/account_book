@@ -87,6 +87,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { useAccountListStore } from '@/stores/account.js';
+import { useCalendarAccountStore } from '@/stores/calendarAccount'; //calendar
 import { moneyFormat } from '../utils/moneyFormat';
 import { ref } from 'vue'
 
@@ -99,18 +100,20 @@ defineProps({
 
 const router = useRouter();
 const accountListStore = useAccountListStore();
+const calendarAccountStore = useCalendarAccountStore(); //calendar
 
 /* 목록 제거 */
 const { deleteAccount } = accountListStore;
 const deleteAccountHandler = (id) => {
   if(confirm('해당 항목을 삭제하시겠습니까?')) {
-    deleteAccount(id);
+    deleteAccount(id, fetchSummaryList); //callback: fetchCalendarSummary
   }
 }
 
 /* 목록 수정 */
 const isModifying = ref(false);
 const { modifyAccount } = accountListStore;
+const { fetchSummaryList } = calendarAccountStore;
 
 const changeInput = () => {
   isModifying.value = true;
@@ -124,7 +127,7 @@ const modifyAccountHandler = (item) => {
     } else if(parseFloat(item.amount) <= 0 || parseFloat(item.amount) % 1 > 0) { //amount > 0 && amount is Integer
       alert('금액은 1원 이상부터 입력 가능합니다. (소수점 불가)');
     } else {
-      modifyAccount(item);
+      modifyAccount(item, fetchSummaryList); //callback: fetchCalendarSummary
       isModifying.value = false;
     }
 }
