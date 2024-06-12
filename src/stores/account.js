@@ -30,9 +30,9 @@ export const useAccountListStore = defineStore('accountList', () => {
   // 항목 추가
   const addAccount = async (account, successCallback) => {
     try {
-      const response = await axios.post(BASEURI, {...account, id: Date.now()});
+      const response = await axios.post(BASEURI, {...account, id: Date.now()+''});
       if (response.status === 201) {
-        state.accountList.push({ ...response.data });
+        state.accountList.unshift({ ...response.data });
         successCallback();
       } else {
         alert('Account 추가 실패');
@@ -161,7 +161,7 @@ export const useAccountListStore = defineStore('accountList', () => {
     try {
       const res = await axios.get(BASEURI);
       if(res.status === 200) {
-        state.accountList = res.data.filter((account) => account.date === date);
+        state.accountList = res.data.filter((account) => account.date === date).sort((a,b) => {return b.id - a.id});
 
         //데이터 없을 경우 닫음
         if(state.accountList.length == 0) {
