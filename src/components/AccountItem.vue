@@ -117,8 +117,16 @@ const changeInput = () => {
 }
 
 const modifyAccountHandler = (item) => {
-    modifyAccount(item);
-    isModifying.value = false;
+    if(item.title === '' || item.title.trim() === '') { //title not null
+      alert('내역을 입력해주세요.');
+    } else if(item.amount === '' || item.amount.trim() === '') { //amount not null
+      alert('금액을 입력해주세요.');
+    } else if(parseFloat(item.amount) <= 0 || parseFloat(item.amount) % 1 > 0) { //amount > 0 && amount is Integer
+      alert('금액은 1원 이상부터 입력 가능합니다. (소수점 불가)');
+    } else {
+      modifyAccount(item);
+      isModifying.value = false;
+    }
 }
 
 </script>
