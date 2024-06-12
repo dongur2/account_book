@@ -46,7 +46,7 @@
         />
       </div>
       <div>
-        <button type="submit" class="form-control btn btn-danger">
+        <button type="submit" class="form-control btn" id="add_btn">
           <b>+</b>
         </button>
       </div>
@@ -162,5 +162,11 @@ form {
 }
 #title {
   flex: 3;
+}
+#add_btn {
+  background-color: rgb(156, 143, 125);
+  color: white;
+  border: none;
+  font-size: 1.1rem;
 }
 </style>
