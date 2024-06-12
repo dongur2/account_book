@@ -8,7 +8,6 @@ export const useAccountListStore = defineStore('accountList', () => {
     accountList: [],
     filterCategory: null, // 필터 카테고리 추가
     isLoading: false,
-    isDailyShow: false
   });
 
   const fetchAccountList = async () => {
@@ -39,7 +38,7 @@ export const useAccountListStore = defineStore('accountList', () => {
       const response = await axios.post(BASEURI, {...account, id: Date.now()+''});
       if (response.status === 201) {
         state.accountList.push({ ...response.data });
-        successCallback();
+        successCallback(account.date);
       } else {
         alert('Account 추가 실패');
       }
@@ -162,35 +161,10 @@ export const useAccountListStore = defineStore('accountList', () => {
     });
   });
 
-  /* 캘린더 - 날짜별 목록 조회 */
-  const fetchDailyAccountList = async (date) => {
-    try {
-      const res = await axios.get(BASEURI);
-      if(res.status === 200) {
-        state.accountList = res.data
-          .filter((account) => account.date === date)
-          .sort((a,b) => { return parseFloat(b.id) - parseFloat(a.id) });
-
-        //데이터 없을 경우 닫음
-        if(state.accountList.length == 0) {
-          state.isDailyShow = false;
-        } else {
-          state.isDailyShow = true;
-        }
-      } else {
-        alert('Filed to get daily accounts');
-      }
-    } catch (err) {
-      alert('Err: '+err);
-    } 
-  }
-
   return {
     accountList: computed(() => state.accountList),
     isLoading: computed(() => state.isLoading),
-    isDailyShow: computed(() => state.isDailyShow),
     fetchAccountList,
-    fetchDailyAccountList,
     chartData,
     updateChartData,
     setFilterCategory,

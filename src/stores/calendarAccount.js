@@ -5,7 +5,7 @@ import { moneyFormat } from '@/utils/moneyFormat';
 
 export const useCalendarAccountStore = defineStore('summaryList', () => {
   const BASEURI = '/api/account';
-  const state = reactive({ summaryList: [] });
+  const state = reactive({ summaryList: [], dailyAccountList: [], isDailyShow: false });
 
   /* 
   * 전체 캘린더 날짜별 수입/지출 요약: 리턴 - title(수입 0원//지출 0원//순수입?), date
@@ -69,7 +69,37 @@ export const useCalendarAccountStore = defineStore('summaryList', () => {
     }
   };
 
-  const summaryList = computed(() => state.summaryList);
+  /*
+  * 날짜별 목록 조회
+  */
+  const fetchDailyAccountList = async (date) => {
+    try {
+      const res = await axios.get(BASEURI);
 
-  return { summaryList, fetchSummaryList };
+      if(res.status === 200) {
+        state.dailyAccountList = res.data
+          .filter((account) => account.date === date)
+          .sort((a,b) => { return parseFloat(b.id) - parseFloat(a.id) });
+        
+      //데이터 없을 경우 닫음
+      if(state.dailyAccountList.length === 0) {
+        state.isDailyShow = false;
+      } else {
+        state.isDailyShow = true;
+      }
+    } else {
+      alert('Failed to get daily accounts');
+    }
+  } catch (err) {
+    alert('Err: '+err);
+  }
+} 
+
+  return { 
+    summaryList: computed(() => state.summaryList),
+    dailyAccountList: computed(() => state.dailyAccountList),
+    isDailyShow: computed(() => state.isDailyShow), 
+    fetchSummaryList,
+    fetchDailyAccountList
+  };
 });

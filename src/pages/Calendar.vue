@@ -2,7 +2,7 @@
   <FullCalendar class="container"/>
   <InputIncomeExpense />
   <div v-if="isDailyShow" class="container" style="background-color:#fefefe">
-    <DailyAccountList />
+    <DailyAccountList :accounts="dailyAccountList" />
   </div>
 </template>
 
@@ -19,5 +19,6 @@ import DailyAccountList from '@/components/calendar/DailyAccountList.vue'
 const calendarAccountStore = useCalendarAccountStore();
 const accountListStore = useAccountListStore();
 const summaryList = computed(() => calendarAccountStore.summaryList); //읽기 전용 반응형 ref 객체 반환
-const isDailyShow = computed(() => accountListStore.isDailyShow);
+const dailyAccountList = computed(() => calendarAccountStore.dailyAccountList);
+const isDailyShow = computed(() => calendarAccountStore.isDailyShow);
 </script>

@@ -10,14 +10,11 @@ import interactionPlugin from '@fullcalendar/interaction'
 
 import { reactive, computed, watch } from 'vue'
 import { useCalendarAccountStore } from '@/stores/calendarAccount'
-import { useAccountListStore } from '@/stores/account'
 
 const calendarAccountStore = useCalendarAccountStore();
-const accontListStore = useAccountListStore();
 const summaryList = computed(() => calendarAccountStore.summaryList); //읽기 전용 반응형 ref 객체 반환
 
-const { fetchSummaryList } = calendarAccountStore;
-const { fetchDailyAccountList } = accontListStore;
+const { fetchSummaryList, fetchDailyAccountList } = calendarAccountStore;
 
 const state = reactive({
   calendarOptions: {
