@@ -2,12 +2,19 @@
   <div id="input_wrap" class="container">
     <form @submit.prevent="handleAddAccount">
       <div id="date">
-        <input type="date" v-model="form.date" class="form-control" required />
+        <input
+          type="date"
+          v-model="form.date"
+          class="form-control"
+          style="font-size: 1.2rem"
+          required
+        />
       </div>
       <div id="type">
         <select
           v-model="form.type"
           class="form-select"
+          style="font-size: 1.2rem"
           @change="updateCategories"
         >
           <option value="none" selected>분류</option>
@@ -16,7 +23,11 @@
         </select>
       </div>
       <div id="category">
-        <select v-model="form.category" class="form-select">
+        <select
+          v-model="form.category"
+          class="form-select"
+          style="font-size: 1.2rem"
+        >
           <option value="none" selected>카테고리</option>
           <option
             v-for="category in categories"
@@ -33,6 +44,7 @@
           v-model="form.title"
           class="form-control"
           placeholder="내용"
+          style="font-size: 1.2rem"
           required
         />
       </div>
@@ -42,11 +54,17 @@
           v-model="form.amount"
           class="form-control"
           placeholder="금액"
+          style="font-size: 1.2rem"
           required
         />
       </div>
       <div>
-        <button type="submit" class="form-control btn" id="add_btn">
+        <button
+          type="submit"
+          class="form-control btn"
+          id="add_btn"
+          style="font-size: 1.2rem"
+        >
           <b>+</b>
         </button>
       </div>
@@ -137,7 +155,7 @@ onMounted(() => {
 });
 </script>
 
-<style>
+<style scoped>
 form {
   display: flex;
   flex-direction: row;
