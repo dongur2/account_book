@@ -1,59 +1,166 @@
-<script setup></script>
-
 <template>
   <div id="input_wrap" class="container">
-    <div id="date">
-      <input type="date" class="form-control" name="date" />
-    </div>
-    <div id="type">
-      <select name="type" id="" class="form-select">
-        <option value="">분류</option>
-        <option value="income">수입</option>
-        <option value="expense">지출</option>
-      </select>
-    </div>
-    <div id="category">
-      <select name="name" id="" class="form-select">
-        <!-- v-if로 분류에 따라 다른 카테고리 나오게 -->
-        <option value="">카테고리</option>
-        <option value="">카테고리</option>
-        <option value="">카테고리</option>
-      </select>
-    </div>
-    <div id="title">
-      <input type="text" class="form-control" placeholder="내용" />
-    </div>
-    <div>
-      <input type="text" class="form-control" placeholder="금액" />
-    </div>
-    <!-- 추가 버튼 -->
-    <div><button class="btn btn-outline-warning">+</button></div>
+    <form @submit.prevent="handleAddAccount">
+      <div id="date">
+        <input type="date" v-model="form.date" class="form-control" required />
+      </div>
+      <div id="type">
+        <select
+          v-model="form.type"
+          class="form-select"
+          @change="updateCategories"
+        >
+          <option value="none" selected>분류</option>
+          <option value="income">수입</option>
+          <option value="expense">지출</option>
+        </select>
+      </div>
+      <div id="category">
+        <select v-model="form.category" class="form-select">
+          <option value="none" selected>카테고리</option>
+          <option
+            v-for="category in categories"
+            :key="category.value"
+            :value="category.value"
+          >
+            {{ category.label }}
+          </option>
+        </select>
+      </div>
+      <div id="title">
+        <input
+          type="text"
+          v-model="form.title"
+          class="form-control"
+          placeholder="내용"
+          required
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          v-model="form.amount"
+          class="form-control"
+          placeholder="금액"
+          required
+        />
+      </div>
+      <div>
+        <button type="submit" class="form-control btn btn-danger">
+          <b>+</b>
+        </button>
+      </div>
+    </form>
   </div>
-
-  <!-- ----------------------------------------------------------------- -->
-
-  <div id="output_wrap"></div>
 </template>
 
+<script setup>
+import { reactive, ref, onMounted } from 'vue';
+import { useAccountListStore } from '../stores/account';
+
+// 틀
+const form = reactive({
+  date: '',
+  type: 'none',
+  category: 'none',
+  title: '',
+  desc: '',
+  amount: '',
+});
+
+const categories = ref([]);
+
+const accountStore = useAccountListStore();
+const { accountList, fetchAccountList, addAccount } = accountStore;
+
+const successCallback = () => {
+  alert('Account successfully added!');
+  resetForm();
+};
+
+const handleAddAccount = async () => {
+  const payload = { ...form };
+
+  // 동적 생성
+  const dynamicPayload = {
+    id: payload.id,
+    type: form.type,
+    title: form.title,
+    desc: '',
+    amount: form.amount,
+    date: form.date,
+  };
+
+  if (form.type === 'income') {
+    dynamicPayload.incomeCategory = form.category;
+  } else if (form.type === 'expense') {
+    dynamicPayload.expenseCategory = form.category;
+  }
+
+  await addAccount(dynamicPayload, successCallback);
+};
+
+// + 눌러서 추가하면 입력창 리셋
+const resetForm = () => {
+  form.date = '';
+  form.type = 'none';
+  form.category = 'none';
+  form.title = '';
+  form.amount = '';
+  updateCategories();
+};
+
+// select box 연동(type, category)
+const updateCategories = () => {
+  if (form.type === 'income') {
+    categories.value = [
+      { label: '근로소득', value: 'salary' },
+      { label: '용돈', value: 'pin' },
+      { label: '기타', value: 'etc' },
+    ];
+  } else if (form.type === 'expense') {
+    categories.value = [
+      { label: '고정 지출', value: 'fixed' },
+      { label: '문화 생활', value: 'culture' },
+      { label: '생활비', value: 'life' },
+      { label: '기타', value: 'etc' },
+    ];
+  } else {
+    categories.value = [];
+  }
+  form.category = 'none';
+};
+
+onMounted(() => {
+  updateCategories();
+  fetchAccountList();
+});
+</script>
+
 <style>
-#input_wrap {
+form {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  flex: 1;
+  gap: 10px;
+}
+
+#input_wrap {
   background-color: white;
   border-radius: 10px;
   margin-top: 20px;
-  justify-content: space-between;
 }
 #date {
-  width: 180px;
+  flex: 1;
 }
 #type {
-  width: 170px;
+  flex: 1;
 }
 #category {
-  width: 180px;
+  flex: 1;
 }
 #title {
-  width: 400px;
+  flex: 3;
 }
 </style>

@@ -129,7 +129,7 @@
     {
       "id": "15",
       "type": "income",
-      "IncomeCategory": "etc",
+      "incomeCategory": "etc",
       "title": "6월 수입",
       "desc": "메모5",
       "amount": "930000",
