@@ -73,8 +73,8 @@ const categories = ref([]);
 const accountStore = useAccountListStore();
 const { accountList, fetchAccountList, addAccount } = accountStore;
 
+// 추가 버튼 눌러서 추가되면 입력창 리셋
 const successCallback = () => {
-  alert('Account successfully added!');
   resetForm();
 };
 
