@@ -68,3 +68,4 @@ node_modules/
 dist/
 npm-debug.log
 yarn-error.log
+db/db.json
