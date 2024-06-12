@@ -30,7 +30,7 @@ export const useAccountListStore = defineStore('accountList', () => {
   // 항목 추가
   const addAccount = async (account, successCallback) => {
     try {
-      const response = await axios.post(BASEURI, account);
+      const response = await axios.post(BASEURI, {...account, id: Date.now()});
       if (response.status === 201) {
         state.accountList.push({ ...response.data });
         successCallback();
