@@ -79,6 +79,7 @@ const { fetchSummaryList } = calendarAccountStore;
 // 추가 버튼 눌러서 추가되면 입력창 리셋
 const successCallback = () => {
   resetForm();
+  fetchAccountList();
   fetchSummaryList();
 };
 

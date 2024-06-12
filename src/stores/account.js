@@ -16,7 +16,13 @@ export const useAccountListStore = defineStore('accountList', () => {
     try {
       const response = await axios.get(BASEURI);
       if (response.status === 200) {
-        state.accountList = response.data;
+        state.accountList = response.data.sort((a,b) => {
+          if(a.date === b.date) {
+            return parseFloat(b.id) - parseFloat(a.id);
+          } else {
+            return new Date(b.date) - new Date(a.date);
+          }
+        });
       } else {
         alert('데이터 조회 실패');
       }
@@ -32,7 +38,7 @@ export const useAccountListStore = defineStore('accountList', () => {
     try {
       const response = await axios.post(BASEURI, {...account, id: Date.now()+''});
       if (response.status === 201) {
-        state.accountList.unshift({ ...response.data });
+        state.accountList.push({ ...response.data });
         successCallback();
       } else {
         alert('Account 추가 실패');
@@ -161,7 +167,9 @@ export const useAccountListStore = defineStore('accountList', () => {
     try {
       const res = await axios.get(BASEURI);
       if(res.status === 200) {
-        state.accountList = res.data.filter((account) => account.date === date).sort((a,b) => {return b.id - a.id});
+        state.accountList = res.data
+          .filter((account) => account.date === date)
+          .sort((a,b) => { return parseFloat(b.id) - parseFloat(a.id) });
 
         //데이터 없을 경우 닫음
         if(state.accountList.length == 0) {
