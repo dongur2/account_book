@@ -162,7 +162,13 @@ export const useAccountListStore = defineStore('accountList', () => {
       const res = await axios.get(BASEURI);
       if(res.status === 200) {
         state.accountList = res.data.filter((account) => account.date === date);
-        state.isDailyShow = true;
+
+        //데이터 없을 경우 닫음
+        if(state.accountList.length == 0) {
+          state.isDailyShow = false;
+        } else {
+          state.isDailyShow = true;
+        }
       } else {
         alert('Filed to get daily accounts');
       }
