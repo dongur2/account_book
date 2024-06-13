@@ -17,7 +17,9 @@
       v-if="!isModifying"
       style="flex: 1.5; align-items: center; justify-content: center"
     >
-      <p>{{ accountItem.date }}</p>
+      <p style="font-weight: 800; color: rgb(90, 90, 90)">
+        {{ accountItem.date }}
+      </p>
     </div>
     <div v-else style="flex: 1">
       <input type="date" v-model="accountItem.date" class="form-control" />
@@ -40,7 +42,7 @@
     </div>
 
     <!-- 카테고리 -->
-    <div v-if="!isModifying" style="flex: 2">
+    <div v-if="!isModifying" style="flex: 2; justify-content: center">
       <span
         style="
           margin: 0px;
@@ -98,7 +100,7 @@
 
     <!-- 메모 -->
     <div v-if="!isModifying" style="flex: 4; align-items: center">
-      <p>{{ accountItem.desc }}</p>
+      <p style="color: rgba(103, 103, 103, 0.5)">{{ accountItem.desc }}</p>
     </div>
     <div v-else style="flex: 4; align-items: center">
       <input
@@ -281,41 +283,42 @@ const categoryBadgeClass = computed(() => {
 
 .badge {
   color: white; /* 공통 텍스트 색상 */
+  width: 100px;
 }
 
 .bg-salary {
   /* 근로소득 */
-  background-color: #90be6d;
+  background-color: rgba(54, 162, 235, 0.7);
 }
 
 .bg-pin {
   /* 용돈 */
-  background-color: #2196f3;
+  background-color: rgba(75, 192, 192, 0.7);
 }
 
 .bg-income-etc {
   /* 수입-기타 */
-  background-color: #43aa8b;
+  background-color: rgba(153, 102, 255, 0.7);
 }
 
 .bg-fixed {
   /* 고정지출 */
-  background-color: #f94144;
+  background-color: rgba(255, 99, 132, 0.7);
 }
 
 .bg-culture {
   /* 문화생활 */
-  background-color: #f3722c;
+  background-color: rgba(255, 159, 64, 0.7);
 }
 
 .bg-life {
   /* 생활비 */
-  background-color: #f9c74f;
+  background-color: rgba(255, 206, 86, 0.7);
 }
 
 .bg-expense-etc {
   /* 지출-기타 */
-  background-color: #f8961e;
+  background-color: rgba(210, 171, 74, 0.7);
 }
 
 .bg-secondary {
