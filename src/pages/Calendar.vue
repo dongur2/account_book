@@ -1,7 +1,7 @@
 <template>
-  <FullCalendar class="container"/>
+  <FullCalendar class="container container-shadow"/>
   <InputIncomeExpense />
-  <div v-if="isDailyShow" class="container" style="background-color:#fefefe">
+  <div v-if="isDailyShow" class="container container-shadow" style="background-color:#fefefe">
     <DailyAccountList :accounts="dailyAccountList" />
   </div>
 </template>

@@ -1,11 +1,11 @@
 <template>
-  <div id="input_wrap" class="container">
+  <div id="input_wrap" class="container container-shadow">
     <form @submit.prevent="handleAddAccount">
       <div id="date">
         <input
           type="date"
           v-model="form.date"
-          class="form-control"
+          class="form-control form-input-box"
           style="font-size: 1.2rem"
           required
         />
@@ -13,7 +13,7 @@
       <div id="type">
         <select
           v-model="form.type"
-          class="form-select"
+          class="form-select form-input-box"
           style="font-size: 1.2rem"
           @change="updateCategories"
         >
@@ -25,7 +25,7 @@
       <div id="category">
         <select
           v-model="form.category"
-          class="form-select"
+          class="form-select form-input-box"
           style="font-size: 1.2rem"
         >
           <option value="none" selected>카테고리</option>
@@ -38,21 +38,23 @@
           </option>
         </select>
       </div>
+      <div style="align-items: center; font-size:1.3rem; color:#B7B7B7">|</div>
       <div id="title">
         <input
           type="text"
           v-model="form.title"
-          class="form-control"
+          class="form-control form-input-box"
           placeholder="내용"
           style="font-size: 1.2rem"
           required
         />
       </div>
+      <div style="align-items: center; font-size:1.3rem; color:#B7B7B7">|</div>
       <div>
         <input
           type="text"
           v-model="form.amount"
-          class="form-control"
+          class="form-control form-input-box"
           placeholder="금액"
           style="font-size: 1.2rem"
           required
@@ -104,25 +106,44 @@ const successCallback = (date = null) => {
 
 const handleAddAccount = async () => {
   const payload = { ...form };
+  const regex = /^[0-9]*$/;
+  
+  if(payload.date === '') {
+    alert('날짜를 선택해주세요.');
+  } else if (payload.title === '' || payload.title.trim() === '') {
+    alert('내용을 입력해주세요.');
+  } else if (payload.title.trim().length > 15) {
+    alert('내용은 15글자 이하만 가능합니다.');
+  } else if (payload.type === 'none') {
+    alert('수입/지출을 선택해주세요.');
+  } else if (payload.category === 'none') {
+    alert('카테고리를 선택해주세요.');
+  } else if (!regex.test(payload.amount)) {
+    alert('금액은 숫자만 입력 가능합니다.');
+  } else if (payload.amount === '' || payload.amount.trim() === '' 
+    || parseFloat(payload.amount) <= 0 || parseFloat(payload.amount) % 1 > 0) {
+    alert('금액은 1원 이상부터 입력 가능합니다. (소수점 불가)')  
 
-  // 동적 생성
-  const dynamicPayload = {
-    id: payload.id,
-    type: form.type,
-    title: form.title,
-    desc: '',
-    amount: form.amount,
-    date: form.date,
+  } else {
+    // 동적 생성
+    const dynamicPayload = {
+      id: payload.id,
+      type: form.type,
+      title: form.title,
+      desc: '',
+      amount: form.amount,
+      date: form.date,
+    };
+
+    if (form.type === 'income') {
+      dynamicPayload.incomeCategory = form.category;
+    } else if (form.type === 'expense') {
+      dynamicPayload.expenseCategory = form.category;
+    }
+
+    await addAccount(dynamicPayload, successCallback);
+    }
   };
-
-  if (form.type === 'income') {
-    dynamicPayload.incomeCategory = form.category;
-  } else if (form.type === 'expense') {
-    dynamicPayload.expenseCategory = form.category;
-  }
-
-  await addAccount(dynamicPayload, successCallback);
-};
 
 // + 눌러서 추가하면 입력창 리셋
 const resetForm = () => {
@@ -192,5 +213,12 @@ form {
   color: white;
   border: none;
   font-size: 1.1rem;
+}
+
+.form-input-box {
+  border:none;
+}
+.form-input-box:focus {
+  box-shadow: none;
 }
 </style>
