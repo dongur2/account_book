@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="justify-content: space-between">
+  <div class="container container-shadow" style="justify-content: space-between">
     <!-- 좌측 PieChart 컴포넌트 -->
     <div style="flex: 1; justify-content: center">
       <PieChart />
@@ -63,7 +63,7 @@
   </div>
 
   <!-- 계좌 목록 섹션 -->
-  <div class="container" style="background-color: #fefefe">
+  <div class="container container-shadow" style="background-color: #fefefe">
     <!-- AccountList 컴포넌트 -->
     <AccountList />
   </div>

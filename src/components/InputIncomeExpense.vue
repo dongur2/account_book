@@ -1,5 +1,5 @@
 <template>
-  <div id="input_wrap" class="container">
+  <div id="input_wrap" class="container container-shadow">
     <form @submit.prevent="handleAddAccount">
       <div id="date">
         <input
