@@ -108,9 +108,9 @@ const handleAddAccount = async () => {
   if(payload.date === '') {
     alert('날짜를 선택해주세요.');
   } else if (payload.title === '' || payload.title.trim() === '') {
-    alert('내역을 입력해주세요.');
+    alert('내용을 입력해주세요.');
   } else if (payload.title.trim().length > 15) {
-    alert('내역은 15글자 이하만 가능합니다.');
+    alert('내용은 15글자 이하만 가능합니다.');
   } else if (payload.type === 'none') {
     alert('수입/지출을 선택해주세요.');
   } else if (payload.category === 'none') {

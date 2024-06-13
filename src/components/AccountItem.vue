@@ -91,7 +91,7 @@
       <input
         type="text"
         v-model="accountItem.title"
-        placeholder="내역을 입력하세요"
+        placeholder="내용을 입력하세요"
         class="form-control"
       />
     </div>
@@ -183,9 +183,11 @@ const changeInput = () => {
 
 const modifyAccountHandler = (item) => {
 
-if (item.title === '' || item.title.trim() === '') {
+  if (item.title === '' || item.title.trim() === '') {
     //title not null
-    alert('내역을 입력해주세요.');
+    alert('내용을 입력해주세요.');
+  } else if (item.title.trim().length > 15) {
+    alert('내용은 15글자 이하만 가능합니다.');
   } else if (item.amount === '' || item.amount.trim() === '') {
     //amount not null
     alert('금액을 입력해주세요.');
