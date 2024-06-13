@@ -3,9 +3,9 @@
     {
       "id": "1",
       "type": "income",
-      "incomeCategory": "salary",
+      "incomeCategory": "pin",
       "title": "5월 수입1",
-      "desc": "메모1",
+      "desc": "메모바꿔",
       "amount": "5000000",
       "date": "2024-05-01"
     },

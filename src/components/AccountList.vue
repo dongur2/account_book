@@ -1,5 +1,5 @@
 <template>
-  <ul class="list-group" style="width: 100%">
+  <ul class="list-group" style="width: 100%; background-color: #fefefe">
     <div
       v-for="(items, month) in groupedData"
       :key="month"
@@ -48,7 +48,7 @@ const groupedData = computed(() => groupByMonth(accountListStore.accountList));
 // 데이터 변경 감지하여 업데이트
 </script>
 
-<style>
+<style scoped>
 .list-group-item {
   margin-bottom: 1em;
 }
