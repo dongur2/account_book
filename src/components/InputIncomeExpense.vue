@@ -104,25 +104,41 @@ const successCallback = (date = null) => {
 
 const handleAddAccount = async () => {
   const payload = { ...form };
+  
+  if(payload.date === '') {
+    alert('날짜를 선택해주세요.');
+  } else if (payload.title === '' || payload.title.trim() === '') {
+    alert('내역을 입력해주세요.');
+  } else if (payload.title.trim().length > 15) {
+    alert('내역은 15글자 이하만 가능합니다.');
+  } else if (payload.type === 'none') {
+    alert('수입/지출을 선택해주세요.');
+  } else if (payload.category === 'none') {
+    alert('카테고리를 선택해주세요.');
+  } else if (payload.amount === '' || payload.amount.trim() === '' 
+    || parseFloat(payload.amount) <= 0 || parseFloat(payload.amount) % 1 > 0) {
+    alert('금액은 1원 이상부터 입력 가능합니다. (소수점 불가)')  
 
-  // 동적 생성
-  const dynamicPayload = {
-    id: payload.id,
-    type: form.type,
-    title: form.title,
-    desc: '',
-    amount: form.amount,
-    date: form.date,
+  } else {
+    // 동적 생성
+    const dynamicPayload = {
+      id: payload.id,
+      type: form.type,
+      title: form.title,
+      desc: '',
+      amount: form.amount,
+      date: form.date,
+    };
+
+    if (form.type === 'income') {
+      dynamicPayload.incomeCategory = form.category;
+    } else if (form.type === 'expense') {
+      dynamicPayload.expenseCategory = form.category;
+    }
+
+    await addAccount(dynamicPayload, successCallback);
+    }
   };
-
-  if (form.type === 'income') {
-    dynamicPayload.incomeCategory = form.category;
-  } else if (form.type === 'expense') {
-    dynamicPayload.expenseCategory = form.category;
-  }
-
-  await addAccount(dynamicPayload, successCallback);
-};
 
 // + 눌러서 추가하면 입력창 리셋
 const resetForm = () => {
