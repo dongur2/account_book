@@ -2,6 +2,8 @@ import { ref, computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
+import { useCalendarAccountStore } from './calendarAccount';
+
 export const useAccountListStore = defineStore('accountList', () => {
   const BASEURI = '/api/account';
   const state = reactive({
@@ -15,7 +17,13 @@ export const useAccountListStore = defineStore('accountList', () => {
     try {
       const response = await axios.get(BASEURI);
       if (response.status === 200) {
-        state.accountList = response.data;
+        state.accountList = response.data.sort((a,b) => {
+          if(a.date === b.date) {
+            return parseFloat(b.id) - parseFloat(a.id);
+          } else {
+            return new Date(b.date) - new Date(a.date);
+          }
+        });
       } else {
         alert('데이터 조회 실패');
       }
@@ -29,10 +37,10 @@ export const useAccountListStore = defineStore('accountList', () => {
   // 항목 추가
   const addAccount = async (account, successCallback) => {
     try {
-      const response = await axios.post(BASEURI, account);
+      const response = await axios.post(BASEURI, {...account, id: Date.now()+''});
       if (response.status === 201) {
         state.accountList.push({ ...response.data });
-        successCallback();
+        successCallback(account.date);
       } else {
         alert('Account 추가 실패');
       }
@@ -73,6 +81,9 @@ export const useAccountListStore = defineStore('accountList', () => {
   /*
    * 목록 삭제
    */
+  const calendarAccountStore = useCalendarAccountStore();
+  const { deleteFetchDailyAccountList } = calendarAccountStore;
+
   const deleteAccount = async (id, successCallBack) => {
     try {
       const res = await axios.delete(`${BASEURI}/${id}`); // delete
@@ -80,7 +91,7 @@ export const useAccountListStore = defineStore('accountList', () => {
       if (res.status === 200) {
         let idx = state.accountList.findIndex((item) => item.id === id);
         state.accountList.splice(idx, 1); // local delete & rendering
-        successCallBack(); //fetchCalendarSummary
+        deleteFetchDailyAccountList(id, successCallBack); //fetchCalendarSummary
       } else {
         console.log('Failed to delete');
       }
@@ -166,6 +177,5 @@ export const useAccountListStore = defineStore('accountList', () => {
     modifyAccount,
     deleteAccount,
     addAccount,
-
   };
 });
