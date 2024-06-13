@@ -172,25 +172,18 @@ const router = useRouter();
 const accountListStore = useAccountListStore();
 const calendarAccountStore = useCalendarAccountStore(); //calendar
 
-/* 목록 제거 */
-const { deleteAccount } = accountListStore;
-const deleteAccountHandler = (id) => {
-  if (confirm('해당 항목을 삭제하시겠습니까?')) {
-    deleteAccount(id, fetchSummaryList); //callback: fetchCalendarSummary
-  }
-};
-
 /* 목록 수정 */
 const isModifying = ref(false);
 const { modifyAccount } = accountListStore;
-const { fetchSummaryList } = calendarAccountStore;
+const { fetchSummaryList, fetchDailyAccountList } = calendarAccountStore;
 
 const changeInput = () => {
   isModifying.value = true;
 };
 
 const modifyAccountHandler = (item) => {
-  if (item.title === '' || item.title.trim() === '') {
+
+if (item.title === '' || item.title.trim() === '') {
     //title not null
     alert('내역을 입력해주세요.');
   } else if (item.amount === '' || item.amount.trim() === '') {
@@ -204,6 +197,14 @@ const modifyAccountHandler = (item) => {
     isModifying.value = false;
   }
 };
+
+/* 목록 제거 */
+const { deleteAccount } = accountListStore;
+const deleteAccountHandler = (id) => {
+  if(confirm('해당 항목을 삭제하시겠습니까?')) {
+    deleteAccount(id, fetchSummaryList);
+  }
+}
 
 // 포맷된 금액 반환 함수
 const formattedAmount = (item) => {
@@ -262,6 +263,7 @@ const categoryBadgeClass = computed(() => {
     }
   }
 });
+
 </script>
 
 <style scoped>

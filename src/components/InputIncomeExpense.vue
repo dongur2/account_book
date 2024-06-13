@@ -75,6 +75,7 @@
 <script setup>
 import { reactive, ref, onMounted } from 'vue';
 import { useAccountListStore } from '../stores/account';
+import { useCalendarAccountStore } from '@/stores/calendarAccount'; //calendar
 
 // 틀
 const form = reactive({
@@ -89,11 +90,16 @@ const form = reactive({
 const categories = ref([]);
 
 const accountStore = useAccountListStore();
+const calendarAccountStore = useCalendarAccountStore(); //calendar
 const { accountList, fetchAccountList, addAccount } = accountStore;
+const { fetchSummaryList, fetchDailyAccountList } = calendarAccountStore;
 
 // 추가 버튼 눌러서 추가되면 입력창 리셋
-const successCallback = () => {
+const successCallback = (date = null) => {
   resetForm();
+  fetchAccountList();
+  fetchSummaryList();
+  if(date != null) fetchDailyAccountList(date);
 };
 
 const handleAddAccount = async () => {
