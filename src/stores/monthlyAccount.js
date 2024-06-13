@@ -30,7 +30,7 @@ export const useMonthlyAccountStore = defineStore(
 
           //   console.log('nowmonth:' + nowMonth);
           //   console.log(new Date(response.data[0].date).getMonth() + 1);
-          console.log(state.monthlyAccountList);
+          // console.log(state.monthlyAccountList);
         } else {
           alert('월별 수입/지출 목록 조회 실패');
         }
@@ -39,9 +39,22 @@ export const useMonthlyAccountStore = defineStore(
       }
     };
 
+    const monthlyIncomeSum = computed(() => {
+      return state.monthlyAccountList
+        .filter((account) => account.type === 'income')
+        .reduce((sum, account) => sum + parseFloat(account.amount), 0);
+    });
+
+    const monthlyExpenseSum = computed(() => {
+      return state.monthlyAccountList
+        .filter((account) => account.type === 'expense')
+        .reduce((sum, account) => sum + parseFloat(account.amount), 0);
+    });
     return {
       fetchMonthlyAccountList,
       monthlyAccountList: computed(() => state.monthlyAccountList),
+      monthlyIncomeSum: computed(() => state.monthlyAccountList),
+      monthlyExpenseSum: computed(() => state.monthlyAccountList),
     };
   }
 );

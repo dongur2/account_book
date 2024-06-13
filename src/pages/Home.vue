@@ -9,7 +9,7 @@
       <!-- 아이콘 부분 -->
       <div style="display: flex; justify-content: flex-end; margin: 1rem 0">
         <!-- 좌측 화살표 버튼 -->
-        <button>
+        <button @click="prevMonth">
           <i class="bi bi-chevron-double-left" style="font-size: inherit"></i>
         </button>
         <!-- 중앙 하우스 아이콘 버튼 -->
@@ -17,12 +17,10 @@
           <i class="bi bi-house" style="font-size: inherit"></i>
         </button>
         <!-- 우측 화살표 버튼 -->
-        <button>
+        <button @click="nextMonth">
           <i class="bi bi-chevron-double-right" style="font-size: inherit"></i>
         </button>
       </div>
-
-      <!-- 수입/지출 정보 -->
       <!-- 수입/지출 정보 -->
       <div style="flex: 2">
         <div
@@ -30,14 +28,14 @@
           style="flex: 1; justify-content: center"
           @click="showIncomes"
         >
-          수입:income
+          {{ selectedMonth }} 월 수입:{{ moneyFormat(monthlyIncomeSum) }}
         </div>
         <div
           class="amount"
           style="flex: 1; justify-content: center"
           @click="showExpenses"
         >
-          지출:expense
+          지출:{{ moneyFormat(monthlyExpenseSum) }}
         </div>
       </div>
 
@@ -70,19 +68,52 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import PieChart from '@/components/PieChart.vue';
 import InputIncomeExpense from '@/components/InputIncomeExpense.vue';
-import AccountList from '../components/AccountList.vue';
-import { useAccountListStore } from '../stores/account.js';
-
+import AccountList from '@/components/AccountList.vue';
+import { useAccountListStore } from '@/stores/account.js';
+import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
+import { moneyFormat } from '@/utils/moneyFormat';
+// 초기 데이터 로드
+onMounted(async () => {
+  await fetchMonthlyAccountList(selectedMonth.value);
+});
 const accountListStore = useAccountListStore();
+const { updateChartData } = accountListStore;
+
+const monthlyAccountListStore = useMonthlyAccountStore();
+const { fetchMonthlyAccountList, monthlyIncomeSum, monthlyExpenseSum } =
+  monthlyAccountListStore;
+
+// 선택된 월 관리
+const selectedMonth = ref(new Date().getMonth() + 1);
+
+// // 월 변경 핸들러
+const prevMonth = () => {
+  selectedMonth.value =
+    selectedMonth.value === 1 ? 12 : selectedMonth.value - 1;
+  fetchMonthlyAccountList(selectedMonth.value);
+  console.log(state.monthlyAccountList);
+};
+
+const nextMonth = () => {
+  selectedMonth.value =
+    selectedMonth.value === 12 ? 1 : selectedMonth.value + 1;
+  fetchMonthlyAccountList(selectedMonth.value);
+};
+
+// 초기 데이터 로드
+onMounted(async () => {
+  await fetchMonthlyAccountList(selectedMonth.value);
+});
 
 const showExpenses = () => {
-  accountListStore.updateChartData('expense');
+  updateChartData('expense');
 };
 
 const showIncomes = () => {
-  accountListStore.updateChartData('income');
+  updateChartData('income');
 };
 </script>
 <style>
