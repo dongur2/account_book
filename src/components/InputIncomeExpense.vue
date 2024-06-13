@@ -106,6 +106,7 @@ const successCallback = (date = null) => {
 
 const handleAddAccount = async () => {
   const payload = { ...form };
+  const regex = /^[0-9]*$/;
   
   if(payload.date === '') {
     alert('날짜를 선택해주세요.');
@@ -117,6 +118,8 @@ const handleAddAccount = async () => {
     alert('수입/지출을 선택해주세요.');
   } else if (payload.category === 'none') {
     alert('카테고리를 선택해주세요.');
+  } else if (!regex.test(payload.amount)) {
+    alert('금액은 숫자만 입력 가능합니다.');
   } else if (payload.amount === '' || payload.amount.trim() === '' 
     || parseFloat(payload.amount) <= 0 || parseFloat(payload.amount) % 1 > 0) {
     alert('금액은 1원 이상부터 입력 가능합니다. (소수점 불가)')  
