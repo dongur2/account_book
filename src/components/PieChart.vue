@@ -34,11 +34,11 @@ function renderPieChart() {
       responsive: false,
       plugins: {
         legend: {
-          position: 'top',
+          position: 'bottom',
         },
         title: {
           display: true,
-          text: '가계부',
+          text: '',
         },
       },
       onClick: (event, elements) => {

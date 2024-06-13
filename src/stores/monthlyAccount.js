@@ -52,9 +52,10 @@ export const useMonthlyAccountStore = defineStore(
     });
     return {
       fetchMonthlyAccountList,
+
       monthlyAccountList: computed(() => state.monthlyAccountList),
-      monthlyIncomeSum: computed(() => state.monthlyAccountList),
-      monthlyExpenseSum: computed(() => state.monthlyAccountList),
+      monthlyIncomeSum,
+      monthlyExpenseSum,
     };
   }
 );
