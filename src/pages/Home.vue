@@ -85,35 +85,42 @@ import AccountList from '@/components/AccountList.vue';
 import { useAccountListStore } from '@/stores/account.js';
 import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
 import { moneyFormat } from '@/utils/moneyFormat';
-// 초기 데이터 로드
-onMounted(async () => {
-  await fetchMonthlyAccountList(selectedMonth.value);
-});
+
+// accountListStore (전체 데이터)
 const accountListStore = useAccountListStore();
 const { updateChartData } = accountListStore;
 
+// monthlyAccountStore (월별 데이터)
 const monthlyAccountListStore = useMonthlyAccountStore();
 const { fetchMonthlyAccountList, monthlyIncomeSum, monthlyExpenseSum } =
   monthlyAccountListStore;
 
+/* 
+ * 초기 데이터 로드: 월별 데이터 패치
+ */
+onMounted(async () => {
+  await fetchMonthlyAccountList(selectedMonth.value);
+});
+
+/* 
+ * 월 관리 
+ */
+
 // 선택된 월 관리
 const selectedMonth = ref(new Date().getMonth() + 1);
 
-// // 월 변경 핸들러
+// 월 변경 핸들러: 월 변경 후 월별데이터 패치 메서드로 매개변수 전달 (데이터 로드)
 const prevMonth = () => {
   selectedMonth.value =
     selectedMonth.value === 1 ? 12 : selectedMonth.value - 1;
   fetchMonthlyAccountList(selectedMonth.value);
-  console.log(monthlyIncomeSum);
+  console.log('monthlyIncomeSum'+monthlyIncomeSum);
 };
-
 const nextMonth = () => {
   selectedMonth.value =
     selectedMonth.value === 12 ? 1 : selectedMonth.value + 1;
   fetchMonthlyAccountList(selectedMonth.value);
 };
-
-// 초기 데이터 로드
 
 const showExpenses = () => {
   updateChartData('expense');

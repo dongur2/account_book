@@ -1,7 +1,6 @@
 import { computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { moneyFormat } from '@/utils/moneyFormat';
 
 export const useMonthlyAccountStore = defineStore(
   'monthlyAccountListStore',
@@ -12,7 +11,7 @@ export const useMonthlyAccountStore = defineStore(
       monthlyAccountList: [],
     });
 
-    // 월별 목록 조회
+    // 월별 목록 조회: 최신순
     const fetchMonthlyAccountList = async (nowMonth) => {
       try {
         const response = await axios.get(BASEURI);
@@ -25,12 +24,13 @@ export const useMonthlyAccountStore = defineStore(
                 parseInt(nowMonth)
             )
             .sort((a, b) => {
-              return parseFloat(b.id) - parseFloat(a.id);
+              if(new Date(a.date) === new Date(b.date)) {
+                return parseFloat(b.id) - parseFloat(a.id); 
+              } else {
+                return new Date(b.date) - new Date(a.date);
+              }
             });
 
-          //   console.log('nowmonth:' + nowMonth);
-          //   console.log(new Date(response.data[0].date).getMonth() + 1);
-          // console.log(state.monthlyAccountList);
         } else {
           alert('월별 수입/지출 목록 조회 실패');
         }
@@ -39,23 +39,9 @@ export const useMonthlyAccountStore = defineStore(
       }
     };
 
-    const monthlyIncomeSum = computed(() => {
-      return state.monthlyAccountList
-        .filter((account) => account.type === 'income')
-        .reduce((sum, account) => sum + parseFloat(account.amount), 0);
-    });
-
-    const monthlyExpenseSum = computed(() => {
-      return state.monthlyAccountList
-        .filter((account) => account.type === 'expense')
-        .reduce((sum, account) => sum + parseFloat(account.amount), 0);
-    });
     return {
       fetchMonthlyAccountList,
-
       monthlyAccountList: computed(() => state.monthlyAccountList),
-      monthlyIncomeSum,
-      monthlyExpenseSum,
     };
   }
 );
