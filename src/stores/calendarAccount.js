@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import { moneyFormat } from '@/utils/moneyFormat';
 
-export const useCalendarAccountStore = defineStore('summaryList', () => {
+export const useCalendarAccountStore = defineStore('calendarAccountList', () => {
   const BASEURI = '/api/account';
   const state = reactive({ summaryList: [], dailyAccountList: [], isDailyShow: false });
 
@@ -95,11 +95,22 @@ export const useCalendarAccountStore = defineStore('summaryList', () => {
   }
 } 
 
+  const deleteFetchDailyAccountList = (id, successCallBack) => {
+    try {
+      let idx = state.dailyAccountList.findIndex((item) => item.id === id);
+      state.dailyAccountList.splice(idx, 1); 
+      successCallBack();
+    } catch (err) {
+      console.log('Err:'+err);
+    }
+  }
+
   return { 
     summaryList: computed(() => state.summaryList),
     dailyAccountList: computed(() => state.dailyAccountList),
     isDailyShow: computed(() => state.isDailyShow), 
     fetchSummaryList,
-    fetchDailyAccountList
+    fetchDailyAccountList,
+    deleteFetchDailyAccountList
   };
 });

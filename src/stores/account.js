@@ -2,6 +2,8 @@ import { ref, computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
+import { useCalendarAccountStore } from './calendarAccount';
+
 export const useAccountListStore = defineStore('accountList', () => {
   const BASEURI = '/api/account';
   const state = reactive({
@@ -79,6 +81,9 @@ export const useAccountListStore = defineStore('accountList', () => {
   /*
    * 목록 삭제
    */
+  const calendarAccountStore = useCalendarAccountStore();
+  const { deleteFetchDailyAccountList } = calendarAccountStore;
+
   const deleteAccount = async (id, successCallBack) => {
     try {
       const res = await axios.delete(`${BASEURI}/${id}`); // delete
@@ -86,7 +91,7 @@ export const useAccountListStore = defineStore('accountList', () => {
       if (res.status === 200) {
         let idx = state.accountList.findIndex((item) => item.id === id);
         state.accountList.splice(idx, 1); // local delete & rendering
-        successCallBack(); //fetchCalendarSummary
+        deleteFetchDailyAccountList(id, successCallBack); //fetchCalendarSummary
       } else {
         console.log('Failed to delete');
       }
