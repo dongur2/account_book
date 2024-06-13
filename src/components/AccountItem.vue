@@ -1,20 +1,25 @@
 <template>
   <li
-    class="list-group-item hover"
+    class="list-group-item"
     style="
       display: flex;
-      border: 1px solid red;
-      background-color: #fefefe;
+      border: none;
       width: 100%;
       border-radius: 5px;
       padding: 5px;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
     "
   >
     <!-- 날짜 -->
-    <div v-if="!isModifying" style="flex: 1; align-items: center">
+    <div
+      v-if="!isModifying"
+      style="flex: 1.5; align-items: center; justify-content: center"
+    >
       <p>{{ accountItem.date }}</p>
     </div>
-    <div v-else style="flex: 1; align-items: center">
+    <div v-else style="flex: 1">
       <input type="date" v-model="accountItem.date" class="form-control" />
     </div>
 
@@ -35,18 +40,25 @@
     </div>
 
     <!-- 카테고리 -->
-    <div v-if="!isModifying" style="flex: 1">
-      <span style="margin: 0px; display: flex; align-items: center">
-        <p class="badge bg-secondary">
+    <div v-if="!isModifying" style="flex: 2">
+      <span
+        style="
+          margin: 0px;
+          display: flex;
+          align-items: center;
+          font-size: 1.3rem;
+        "
+      >
+        <span :class="['badge', categoryBadgeClass]">
           {{
             accountItem.type === 'income'
-              ? accountItem.incomeCategory
-              : accountItem.expenseCategory
+              ? translateCategory(accountItem.incomeCategory, 'income')
+              : translateCategory(accountItem.expenseCategory, 'expense')
           }}
-        </p>
+        </span>
       </span>
     </div>
-    <div v-else style="flex: 1; align-items: center">
+    <div v-else style="flex: 1.5; align-items: center">
       <select
         v-if="accountItem.type === 'income'"
         name="category"
@@ -72,10 +84,10 @@
     </div>
 
     <!-- 내용 -->
-    <div v-if="!isModifying" style="flex: 2; align-items: center">
+    <div v-if="!isModifying" style="flex: 3; align-items: center">
       <p>{{ accountItem.title }}</p>
     </div>
-    <div v-else style="flex: 1; align-items: center">
+    <div v-else style="flex: 3; align-items: center">
       <input
         type="text"
         v-model="accountItem.title"
@@ -85,10 +97,10 @@
     </div>
 
     <!-- 메모 -->
-    <div v-if="!isModifying" style="flex: 3; align-items: center">
+    <div v-if="!isModifying" style="flex: 4; align-items: center">
       <p>{{ accountItem.desc }}</p>
     </div>
-    <div v-else style="flex: 3; align-items: center">
+    <div v-else style="flex: 4; align-items: center">
       <input
         type="text"
         v-model="accountItem.desc"
@@ -98,12 +110,16 @@
     </div>
 
     <!-- 금액 -->
-    <div v-if="!isModifying" style="flex: 1; align-items: center">
-      <p :style="{ color: accountItem.type === 'income' ? 'green' : 'red' }">
-        {{ moneyFormat(accountItem.amount) }}
+    <div v-if="!isModifying" style="flex: 2; align-items: center">
+      <p
+        :style="{
+          color: accountItem.type === 'income' ? '#35948C' : '#CF5A7A',
+        }"
+      >
+        {{ formattedAmount(accountItem) }}
       </p>
     </div>
-    <div v-else style="flex: 1; align-items: center">
+    <div v-else style="flex: 2; align-items: center">
       <input
         type="text"
         v-model="accountItem.amount"
@@ -113,11 +129,11 @@
     </div>
 
     <!-- 버튼(수정, 삭제) -->
-    <div style="flex: 1; align-items: center; justify-content: end">
+    <div style="flex: 1; align-items: center; justify-content: end; gap: 5px">
       <!-- 수정 버튼 -->
       <button
         type="button"
-        class="btn"
+        class="btn btn-light"
         @click="isModifying ? modifyAccountHandler(accountItem) : changeInput()"
       >
         <i class="fa-solid fa-pen"></i>
@@ -125,7 +141,7 @@
       <!-- 삭제 버튼 -->
       <button
         type="button"
-        class="btn"
+        class="btn btn-light"
         @click="deleteAccountHandler(accountItem.id)"
       >
         <i class="fa-solid fa-trash-can"></i>
@@ -139,10 +155,10 @@ import { useRouter } from 'vue-router';
 import { useAccountListStore } from '@/stores/account.js';
 import { useCalendarAccountStore } from '@/stores/calendarAccount'; //calendar
 import { moneyFormat } from '../utils/moneyFormat';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 // 컴포넌트 속성 정의
-defineProps({
+const props = defineProps({
   accountItem: {
     type: Object,
     required: true,
@@ -188,6 +204,64 @@ const modifyAccountHandler = (item) => {
     isModifying.value = false;
   }
 };
+
+// 포맷된 금액 반환 함수
+const formattedAmount = (item) => {
+  const prefix = item.type === 'income' ? '+ ' : '- ';
+  return prefix + moneyFormat(item.amount);
+};
+
+// 카테고리 한글 변환 함수
+const translateCategory = (category, type) => {
+  const incomeCategories = {
+    salary: '근로소득',
+    pin: '용돈',
+    etc: '기타',
+  };
+
+  const expenseCategories = {
+    fixed: '고정지출',
+    culture: '문화생활',
+    life: '생활비',
+    etc: '기타',
+  };
+
+  if (type === 'income') {
+    return incomeCategories[category] || category;
+  } else if (type === 'expense') {
+    return expenseCategories[category] || category;
+  }
+  return category;
+};
+
+// 카테고리별 클래스 설정
+const categoryBadgeClass = computed(() => {
+  if (props.accountItem.type === 'income') {
+    switch (props.accountItem.incomeCategory) {
+      case 'salary':
+        return 'bg-salary';
+      case 'pin':
+        return 'bg-pin';
+      case 'etc':
+        return 'bg-income-etc';
+      default:
+        return 'bg-secondary';
+    }
+  } else {
+    switch (props.accountItem.expenseCategory) {
+      case 'fixed':
+        return 'bg-fixed';
+      case 'culture':
+        return 'bg-culture';
+      case 'life':
+        return 'bg-life';
+      case 'etc':
+        return 'bg-expense-etc';
+      default:
+        return 'bg-secondary';
+    }
+  }
+});
 </script>
 
 <style scoped>
@@ -195,14 +269,56 @@ const modifyAccountHandler = (item) => {
   font-size: 1.1rem;
   margin: 0;
   padding: 0;
-  /* border: 1px solid blue; */
 }
 
-/* 한 덩어리 전체 */
-.list-group-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
+.list-group-item:hover {
+  background-color: rgb(241, 241, 241);
 }
+
+/* == 카테고리 뱃지 시작 == */
+
+.badge {
+  color: white; /* 공통 텍스트 색상 */
+}
+
+.bg-salary {
+  /* 근로소득 */
+  background-color: #90be6d;
+}
+
+.bg-pin {
+  /* 용돈 */
+  background-color: #2196f3;
+}
+
+.bg-income-etc {
+  /* 수입-기타 */
+  background-color: #43aa8b;
+}
+
+.bg-fixed {
+  /* 고정지출 */
+  background-color: #f94144;
+}
+
+.bg-culture {
+  /* 문화생활 */
+  background-color: #f3722c;
+}
+
+.bg-life {
+  /* 생활비 */
+  background-color: #f9c74f;
+}
+
+.bg-expense-etc {
+  /* 지출-기타 */
+  background-color: #f8961e;
+}
+
+.bg-secondary {
+  background-color: #6c757d;
+}
+
+/* == 카테고리 뱃지 끝 == */
 </style>
