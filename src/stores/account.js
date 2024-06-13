@@ -17,8 +17,8 @@ export const useAccountListStore = defineStore('accountList', () => {
     try {
       const response = await axios.get(BASEURI);
       if (response.status === 200) {
-        state.accountList = response.data.sort((a,b) => {
-          if(a.date === b.date) {
+        state.accountList = response.data.sort((a, b) => {
+          if (a.date === b.date) {
             return parseFloat(b.id) - parseFloat(a.id);
           } else {
             return new Date(b.date) - new Date(a.date);
@@ -37,7 +37,10 @@ export const useAccountListStore = defineStore('accountList', () => {
   // 항목 추가
   const addAccount = async (account, successCallback) => {
     try {
-      const response = await axios.post(BASEURI, {...account, id: Date.now()+''});
+      const response = await axios.post(BASEURI, {
+        ...account,
+        id: Date.now() + '',
+      });
       if (response.status === 201) {
         state.accountList.push({ ...response.data });
         successCallback(account.date);
