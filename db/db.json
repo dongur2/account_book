@@ -5,7 +5,7 @@
       "type": "income",
       "incomeCategory": "pin",
       "title": "5월 수입1",
-      "desc": "메모바꿔",
+      "desc": "돈 벌기 힘들다",
       "amount": "5000000",
       "date": "2024-05-01"
     },
@@ -16,7 +16,7 @@
       "title": "5월 수입2",
       "desc": "메모2",
       "amount": "2500000",
-      "date": "2024-05-10"
+      "date": "2024-05-23"
     },
     {
       "id": "3",
@@ -48,10 +48,10 @@
     {
       "id": "6",
       "type": "expense",
-      "expenseCategory": "life",
-      "title": "5월 지출3",
+      "expenseCategory": "fixed",
+      "title": "기부",
       "desc": "메모3",
-      "amount": "9000",
+      "amount": "9000001",
       "date": "2024-05-26"
     },
     {
@@ -76,8 +76,8 @@
       "id": "9",
       "type": "income",
       "incomeCategory": "pin",
-      "title": "6월 수입2",
-      "desc": "메모2",
+      "title": "고모한테 용돈 받음",
+      "desc": ">ㅁ<",
       "amount": "3000000",
       "date": "2024-06-10"
     },
@@ -112,28 +112,235 @@
       "id": "13",
       "type": "expense",
       "expenseCategory": "life",
-      "title": "6월 지출3",
-      "desc": "메모3",
+      "title": "반찬 사먹음",
+      "desc": "미역 줄기",
       "amount": "768700",
       "date": "2024-06-26"
     },
     {
       "id": "14",
       "type": "expense",
-      "expenseCategory": "etc",
-      "title": "6월 지출4",
+      "expenseCategory": "fixed",
+      "title": "기부",
       "desc": "메모4",
-      "amount": "530000",
+      "amount": "53000000",
       "date": "2024-06-30"
     },
     {
       "id": "15",
       "type": "income",
       "incomeCategory": "etc",
-      "title": "6월 수입",
-      "desc": "메모5",
+      "title": "인형 눈붙이기",
+      "desc": "4000개 붙임",
       "amount": "930000",
       "date": "2024-06-30"
+    },
+    {
+      "id": "1718344105673",
+      "type": "expense",
+      "expenseCategory": "etc",
+      "title": "조카 어린이날 선물 구입",
+      "desc": "티니핑 풀세트 구매",
+      "amount": "10000000",
+      "date": "2024-05-05"
+    },
+    {
+      "id": "1718344144671",
+      "type": "income",
+      "title": "월급",
+      "desc": "",
+      "amount": "50000000",
+      "date": "2024-05-25",
+      "incomeCategory": "salary"
+    },
+    {
+      "id": "1718344181239",
+      "type": "income",
+      "title": "엄마가 용돈 줌><",
+      "desc": "",
+      "amount": "3000000",
+      "date": "2024-06-11",
+      "incomeCategory": "pin"
+    },
+    {
+      "id": "1718344249608",
+      "type": "expense",
+      "expenseCategory": "etc",
+      "title": "어버이날 선물",
+      "desc": "><",
+      "amount": "20000000",
+      "date": "2024-05-08"
+    },
+    {
+      "id": "1718344266433",
+      "type": "expense",
+      "title": "스승의 날 선물",
+      "desc": "",
+      "amount": "10000000",
+      "date": "2024-06-15",
+      "expenseCategory": "etc"
+    },
+    {
+      "id": "1718344283087",
+      "type": "income",
+      "title": "코인 대박남",
+      "desc": "",
+      "amount": "100000000",
+      "date": "2024-05-14",
+      "incomeCategory": "etc"
+    },
+    {
+      "id": "1718344306463",
+      "type": "income",
+      "title": "부업",
+      "desc": "",
+      "amount": "4000000",
+      "date": "2024-05-24",
+      "incomeCategory": "salary"
+    },
+    {
+      "id": "1718344321455",
+      "type": "income",
+      "incomeCategory": "salary",
+      "title": "쿠팡 알바",
+      "desc": "",
+      "amount": "333333",
+      "date": "2024-06-12"
+    },
+    {
+      "id": "1718344369831",
+      "type": "expense",
+      "expenseCategory": "life",
+      "title": "파묘 보러감",
+      "desc": "",
+      "amount": "20000",
+      "date": "2024-05-17"
+    },
+    {
+      "id": "1718344403487",
+      "type": "income",
+      "incomeCategory": "pin",
+      "title": "할머니한테 용돈 받음",
+      "desc": "할머니 최고",
+      "amount": "100000000",
+      "date": "2024-05-10"
+    },
+    {
+      "id": "1718344439026",
+      "type": "expense",
+      "expenseCategory": "life",
+      "title": "휴지 구매",
+      "desc": "쿠팡에서 구매",
+      "amount": "4500",
+      "date": "2024-05-28"
+    },
+    {
+      "id": "1718344488151",
+      "type": "expense",
+      "title": "베버리힐즈 월세",
+      "desc": "",
+      "amount": "100000000",
+      "date": "2024-06-16",
+      "expenseCategory": "life"
+    },
+    {
+      "id": "1718344521535",
+      "type": "income",
+      "incomeCategory": "etc",
+      "title": "주식 팔았음",
+      "desc": "엔비디아 1000주",
+      "amount": "234567872",
+      "date": "2024-05-11"
+    },
+    {
+      "id": "1718344561912",
+      "type": "expense",
+      "expenseCategory": "fixed",
+      "title": "전기세",
+      "desc": "에어컨 많이 돌림",
+      "amount": "7894657",
+      "date": "2024-05-09"
+    },
+    {
+      "id": "1718344590759",
+      "type": "expense",
+      "expenseCategory": "culture",
+      "title": "뮤지컬 회전문 돔",
+      "desc": "시카고",
+      "amount": "77777777",
+      "date": "2024-05-14"
+    },
+    {
+      "id": "1718344662535",
+      "type": "income",
+      "incomeCategory": "salary",
+      "title": "쿠팡 신선센터",
+      "desc": "열일했음",
+      "amount": "5554444333",
+      "date": "2024-05-23"
+    },
+    {
+      "id": "1718344909862",
+      "type": "income",
+      "title": "월급 받았음",
+      "desc": "",
+      "amount": "5000000",
+      "date": "2024-06-25",
+      "incomeCategory": "salary"
+    },
+    {
+      "id": "1718344935246",
+      "type": "expense",
+      "title": "김밥 사먹음",
+      "desc": "",
+      "amount": "5500",
+      "date": "2024-06-12",
+      "expenseCategory": "life"
+    },
+    {
+      "id": "1718344960078",
+      "type": "income",
+      "incomeCategory": "pin",
+      "title": "할아버지한테 용돈 받음",
+      "desc": "",
+      "amount": "7777777",
+      "date": "2024-06-03"
+    },
+    {
+      "id": "1718344993350",
+      "type": "expense",
+      "title": "가스비",
+      "desc": "",
+      "amount": "4545345",
+      "date": "2024-06-03",
+      "expenseCategory": "life"
+    },
+    {
+      "id": "1718345024014",
+      "type": "expense",
+      "expenseCategory": "culture",
+      "title": "야구 직관",
+      "desc": "",
+      "amount": "40000000",
+      "date": "2024-06-07"
+    },
+    {
+      "id": "1718345045934",
+      "type": "income",
+      "incomeCategory": "salary",
+      "title": "쿠팡 알바",
+      "desc": "고인물한테 털림",
+      "amount": "2222222",
+      "date": "2024-06-12"
+    },
+    {
+      "id": "1718345087462",
+      "type": "income",
+      "incomeCategory": "etc",
+      "title": "주식 팔았음",
+      "desc": "",
+      "amount": "12334568",
+      "date": "2024-06-25"
     }
   ]
 }
