@@ -28,7 +28,7 @@
         </button>
       </div>
       <!-- 수입/지출 정보 -->
-      <div style="flex: 2; flex-direction: column">
+      <div style="flex: 2; flex-direction: column; cursor: pointer">
         <div
           class="amount"
           style="flex: 1; justify-content: center"
@@ -77,7 +77,10 @@
   </div>
 
   <!-- 계좌 목록 섹션 -->
-  <div class="container container-shadow" style="background-color: #fefefe">
+  <div
+    class="container container-shadow"
+    style="background-color: #fefefe; margin-bottom: 20px"
+  >
     <!-- AccountList 컴포넌트 -->
     <AccountList />
   </div>
@@ -91,25 +94,29 @@ import AccountList from '@/components/AccountList.vue';
 import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
 import { moneyFormat } from '@/utils/moneyFormat';
 
-
 // monthlyAccountStore (월별 데이터)
 const monthlyAccountListStore = useMonthlyAccountStore();
 const { fetchMonthlyAccountList, updateChartData } = monthlyAccountListStore;
 
-const monthlyAccountList = computed(() => monthlyAccountListStore.monthlyAccountList);
-const monthlyIncomeSum = computed(() => monthlyAccountListStore.monthlyIncomeSum);
-const monthlyExpenseSum = computed(() => monthlyAccountListStore.monthlyExpenseSum);
+const monthlyAccountList = computed(
+  () => monthlyAccountListStore.monthlyAccountList
+);
+const monthlyIncomeSum = computed(
+  () => monthlyAccountListStore.monthlyIncomeSum
+);
+const monthlyExpenseSum = computed(
+  () => monthlyAccountListStore.monthlyExpenseSum
+);
 
-/* 
+/*
  * 초기 데이터 로드: 월별 데이터 패치
  */
 onMounted(async () => {
   await fetchMonthlyAccountList(selectedMonth.value, selectedYear.value);
 });
 
-
-/* 
- * 월 관리 
+/*
+ * 월 관리
  */
 
 // 선택된 월과 년도 관리
@@ -152,6 +159,9 @@ const showIncomes = () => {
 </script>
 
 <style>
+* {
+  /* border: 1px solid blue; */
+}
 .left-home-right-btn-wrap {
   display: flex;
   justify-content: flex-end;
