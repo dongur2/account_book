@@ -78,7 +78,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import PieChart from '@/components/PieChart.vue';
 import InputIncomeExpense from '@/components/InputIncomeExpense.vue';
 import AccountList from '@/components/AccountList.vue';
@@ -87,14 +87,17 @@ import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
 import { moneyFormat } from '@/utils/moneyFormat';
 
 // accountListStore (전체 데이터)
-const accountListStore = useAccountListStore();
-const { updateChartData } = accountListStore;
+// const accountListStore = useAccountListStore();
+// const { updateChartData } = accountListStore;
 
 // monthlyAccountStore (월별 데이터)
 const monthlyAccountListStore = useMonthlyAccountStore();
-const { fetchMonthlyAccountList, monthlyIncomeSum, monthlyExpenseSum } =
+const { fetchMonthlyAccountList } =
   monthlyAccountListStore;
 
+const monthlyAccountList = computed(() => monthlyAccountListStore.monthlyAccountList);
+const monthlyIncomeSum = computed(() => monthlyAccountListStore.monthlyIncomeSum);
+const monthlyExpenseSum = computed(() => monthlyAccountListStore.monthlyExpenseSum);
 /* 
  * 초기 데이터 로드: 월별 데이터 패치
  */

@@ -26,7 +26,7 @@ const { fetchMonthlyAccountList } = monthlyAccountListStore;
 onMounted(async () => {
   // await fetchAccountList();
   await fetchMonthlyAccountList(new Date().getMonth() + 1);
-  console.log('1:', monthlyAccountList);
+  // console.log('1:', monthlyAccountList);
 });
 
 const monthlyAccountList = computed(

@@ -1,21 +1,30 @@
 <script setup>
 import Chart from 'chart.js/auto';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, reactive, computed } from 'vue';
 import { useAccountListStore } from '@/stores/account.js';
+const accountListStore = useAccountListStore();
+const { accountList } = accountListStore;
+
+import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
+const monthlyAccountStore = useMonthlyAccountStore();
+const { fetchMonthlyAccountList, updateChartData } = monthlyAccountStore;
+
 
 const pieChartRef = ref(null);
-const accountListStore = useAccountListStore();
+const listRef = ref(accountList)
 
 let chartInstance = null;
 
 onMounted(async () => {
-  await accountListStore.fetchAccountList();
-  accountListStore.updateChartData('expense'); // 초기 데이터는 지출로 설정
+  await fetchMonthlyAccountList(new Date().getMonth() + 1); // 그래프데이터는 여기서 마운트
+  monthlyAccountStore.updateChartData('expense'); // 초기 데이터는 지출로 설정
   renderPieChart();
 });
 
+const monthlyAccountList = computed(() => monthlyAccountStore.monthlyAccountList)
+
 watch(
-  () => accountListStore.chartData,
+  () => monthlyAccountStore.chartData,
   () => {
     if (chartInstance) {
       chartInstance.destroy();
@@ -29,7 +38,7 @@ function renderPieChart() {
   const ctx = pieChartRef.value.getContext('2d');
   chartInstance = new Chart(ctx, {
     type: 'doughnut',
-    data: accountListStore.chartData,
+    data: monthlyAccountStore.chartData,
     options: {
       responsive: false,
       plugins: {
@@ -44,7 +53,7 @@ function renderPieChart() {
       onClick: (event, elements) => {
         if (elements.length) {
           const firstElement = elements[0];
-          const label = accountListStore.chartData.labels[firstElement.index];
+          const label = monthlyAccountStore.chartData.labels[firstElement.index];
           handleChartClick(label);
           console.log(label);
         }
