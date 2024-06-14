@@ -1,19 +1,17 @@
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { moneyFormat } from '@/utils/moneyFormat';
 
 export const useMonthlyAccountStore = defineStore(
   'monthlyAccountListStore',
   () => {
     const BASEURI = '/api/account';
+    const nowMonth = ref('');
     const state = reactive({
-      nowMonth: '',
       monthlyAccountList: [],
     });
 
-    // 월별 목록 조회
-    const fetchMonthlyAccountList = async (nowMonth) => {
+    const fetchMonthlyAccountList = async (nowMonthValue, nowYearValue) => {
       try {
         const response = await axios.get(BASEURI);
 
@@ -22,15 +20,14 @@ export const useMonthlyAccountStore = defineStore(
             .filter(
               (account) =>
                 parseFloat(new Date(account.date).getMonth() + 1) ===
-                parseInt(nowMonth)
+                  parseInt(nowMonthValue) &&
+                new Date(account.date).getFullYear() === parseInt(nowYearValue)
             )
-            .sort((a, b) => {
-              return parseFloat(b.id) - parseFloat(a.id);
-            });
+            .sort((a, b) => parseFloat(b.id) - parseFloat(a.id));
 
-          //   console.log('nowmonth:' + nowMonth);
-          //   console.log(new Date(response.data[0].date).getMonth() + 1);
-          // console.log(state.monthlyAccountList);
+          if (nowMonthValue !== 'Monthly') {
+            nowMonth.value = getMonthName(parseInt(nowMonthValue) - 1);
+          }
         } else {
           alert('월별 수입/지출 목록 조회 실패');
         }
@@ -50,12 +47,39 @@ export const useMonthlyAccountStore = defineStore(
         .filter((account) => account.type === 'expense')
         .reduce((sum, account) => sum + parseFloat(account.amount), 0);
     });
+
+    const currentMonth = computed(() => nowMonth.value);
+
+    const getMonthName = (monthIndex) => {
+      const monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ];
+      return monthNames[monthIndex];
+    };
+
+    const setCurrentMonth = (month) => {
+      nowMonth.value = month;
+    };
+
     return {
       fetchMonthlyAccountList,
-
       monthlyAccountList: computed(() => state.monthlyAccountList),
       monthlyIncomeSum,
       monthlyExpenseSum,
+      currentMonth,
+      getMonthName,
+      setCurrentMonth,
     };
   }
 );
