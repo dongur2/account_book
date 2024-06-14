@@ -2,6 +2,7 @@ import { computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
+import { useMonthlyAccountStore } from './monthlyAccount';
 import { useCalendarAccountStore } from './calendarAccount';
 
 export const useAccountListStore = defineStore('accountList', () => {
@@ -10,6 +11,9 @@ export const useAccountListStore = defineStore('accountList', () => {
     accountList: [],
     isLoading: false,
   });
+
+  const monthlyAccountListStore = useMonthlyAccountStore();
+  const { fetchMonthlyAccountList } = monthlyAccountListStore;
 
   const fetchAccountList = async () => {
     state.isLoading = true;
@@ -27,7 +31,7 @@ export const useAccountListStore = defineStore('accountList', () => {
         alert('데이터 조회 실패');
       }
     } catch (error) {
-      alert('에러발생 :' + error);
+      console.log('에러발생 :' + error);
     } finally {
       state.isLoading = false;
     }
@@ -43,11 +47,12 @@ export const useAccountListStore = defineStore('accountList', () => {
       if (response.status === 201) {
         state.accountList.push({ ...response.data });
         successCallback(account.date);
+        fetchMonthlyAccountList(new Date(account.date).getMonth()+1)
       } else {
         alert('Account 추가 실패');
       }
     } catch (error) {
-      alert('에러발생 :' + error);
+      console.log('에러발생 :' + error);
     }
   };
 

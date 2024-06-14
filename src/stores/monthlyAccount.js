@@ -41,7 +41,7 @@ export const useMonthlyAccountStore = defineStore(
           alert('월별 수입/지출 목록 조회 실패');
         }
       } catch (error) {
-        alert('에러 발생 : ' + error);
+        console.log('에러 발생 : ' + error);
       }
     };
 

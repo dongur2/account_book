@@ -77,6 +77,7 @@
 <script setup>
 import { reactive, ref, onMounted } from 'vue';
 import { useAccountListStore } from '../stores/account';
+import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
 import { useCalendarAccountStore } from '@/stores/calendarAccount'; //calendar
 
 // 틀
@@ -93,8 +94,11 @@ const categories = ref([]);
 
 const accountStore = useAccountListStore();
 const calendarAccountStore = useCalendarAccountStore(); //calendar
+const monthlyAccountListStore = useMonthlyAccountStore();
 const { accountList, fetchAccountList, addAccount } = accountStore;
 const { fetchSummaryList, fetchDailyAccountList } = calendarAccountStore;
+const { fetchMonthlyAccountList } = monthlyAccountListStore;
+
 
 // 추가 버튼 눌러서 추가되면 입력창 리셋
 const successCallback = (date = null) => {
