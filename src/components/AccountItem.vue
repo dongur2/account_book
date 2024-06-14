@@ -156,6 +156,7 @@
 import { useRouter } from 'vue-router';
 import { useAccountListStore } from '@/stores/account.js';
 import { useCalendarAccountStore } from '@/stores/calendarAccount'; //calendar
+import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
 import { moneyFormat } from '../utils/moneyFormat';
 import { ref, computed } from 'vue';
 
@@ -177,7 +178,7 @@ const calendarAccountStore = useCalendarAccountStore(); //calendar
 /* 목록 수정 */
 const isModifying = ref(false);
 const { modifyAccount } = accountListStore;
-const { fetchSummaryList, fetchDailyAccountList } = calendarAccountStore;
+const { fetchSummaryList } = calendarAccountStore;
 
 const changeInput = () => {
   isModifying.value = true;
