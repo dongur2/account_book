@@ -1,21 +1,34 @@
 <script setup>
 import Chart from 'chart.js/auto';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, reactive, computed } from 'vue';
 import { useAccountListStore } from '@/stores/account.js';
+const accountListStore = useAccountListStore();
+const { accountList } = accountListStore;
+
+import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
+const monthlyAccountStore = useMonthlyAccountStore();
+const { fetchMonthlyAccountList, updateChartData } = monthlyAccountStore;
+
 
 const pieChartRef = ref(null);
-const accountListStore = useAccountListStore();
 
 let chartInstance = null;
 
 onMounted(async () => {
-  await accountListStore.fetchAccountList();
-  accountListStore.updateChartData('expense'); // 초기 데이터는 지출로 설정
+  await fetchMonthlyAccountList(new Date().getMonth() + 1); // 그래프데이터는 여기서 마운트
+  monthlyAccountStore.updateChartData('expense'); // 초기 데이터는 지출로 설정
   renderPieChart();
 });
 
+const monthlyAccountList = computed(() => monthlyAccountStore.monthlyAccountList);
+const chartData = computed(() => monthlyAccountStore.chartData);
+console.log('chartdata ',chartData)
+
+const listRef = ref(monthlyAccountList);
+
+
 watch(
-  () => accountListStore.chartData,
+  () => monthlyAccountStore.chartData,
   () => {
     if (chartInstance) {
       chartInstance.destroy();
@@ -29,9 +42,9 @@ function renderPieChart() {
   const ctx = pieChartRef.value.getContext('2d');
   chartInstance = new Chart(ctx, {
     type: 'doughnut',
-    data: accountListStore.chartData,
+    data: monthlyAccountStore.chartData,
     options: {
-      responsive: false,
+      responsive: true,
       plugins: {
         legend: {
           position: 'bottom',
@@ -44,7 +57,7 @@ function renderPieChart() {
       onClick: (event, elements) => {
         if (elements.length) {
           const firstElement = elements[0];
-          const label = accountListStore.chartData.labels[firstElement.index];
+          const label = monthlyAccountStore.chartData.labels[firstElement.index];
           handleChartClick(label);
           console.log(label);
         }
@@ -54,7 +67,7 @@ function renderPieChart() {
 }
 
 async function handleChartClick(label) {
-  await accountListStore.setFilterCategory(label);
+  await monthlyAccountStore.setFilterCategory(label);
 }
 </script>
 

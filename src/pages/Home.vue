@@ -84,25 +84,33 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import PieChart from '@/components/PieChart.vue';
 import InputIncomeExpense from '@/components/InputIncomeExpense.vue';
 import AccountList from '@/components/AccountList.vue';
-import { useAccountListStore } from '@/stores/account.js';
 import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
 import { moneyFormat } from '@/utils/moneyFormat';
 
-// 초기 데이터 로드
+
+// monthlyAccountStore (월별 데이터)
+const monthlyAccountListStore = useMonthlyAccountStore();
+const { fetchMonthlyAccountList, updateChartData } = monthlyAccountListStore;
+
+const monthlyAccountList = computed(() => monthlyAccountListStore.monthlyAccountList);
+const monthlyIncomeSum = computed(() => monthlyAccountListStore.monthlyIncomeSum);
+const monthlyExpenseSum = computed(() => monthlyAccountListStore.monthlyExpenseSum);
+
+/* 
+ * 초기 데이터 로드: 월별 데이터 패치
+ */
 onMounted(async () => {
   await fetchMonthlyAccountList(selectedMonth.value, selectedYear.value);
 });
 
-const accountListStore = useAccountListStore();
-const { updateChartData } = accountListStore;
 
-const monthlyAccountListStore = useMonthlyAccountStore();
-const { fetchMonthlyAccountList, monthlyIncomeSum, monthlyExpenseSum } =
-  monthlyAccountListStore;
+/* 
+ * 월 관리 
+ */
 
 // 선택된 월과 년도 관리
 const selectedMonth = ref(new Date().getMonth() + 1);
@@ -124,7 +132,6 @@ const resetToCurrentMonth = () => {
   selectedYear.value = new Date().getFullYear();
   fetchMonthlyAccountList(selectedMonth.value, selectedYear.value);
 };
-
 const nextMonth = () => {
   if (selectedMonth.value === 12) {
     selectedMonth.value = 1;
@@ -135,11 +142,10 @@ const nextMonth = () => {
   fetchMonthlyAccountList(selectedMonth.value, selectedYear.value);
 };
 
-// 초기 데이터 로드
+// 차트: 초기 데이터 로드
 const showExpenses = () => {
   updateChartData('expense');
 };
-
 const showIncomes = () => {
   updateChartData('income');
 };

@@ -9,13 +9,10 @@
   </div>
 </template>
 <script setup>
-import { computed } from 'vue';
 import Header from '@/components/Header.vue';
-import { useAccountListStore } from '@/stores/account.js';
-// import Loading from '@/components/Loading.vue'
+import { useMonthlyAccountStore } from './stores/monthlyAccount';
 
-const AccountListStore = useAccountListStore();
-// const isLoading = computed(()=>todoListStore.isLoading);
-const fetchAccountList = AccountListStore.fetchAccountList;
-fetchAccountList();
+const monthlyAccountStore = useMonthlyAccountStore();
+const {fetchMonthlyAccountList} = monthlyAccountStore;
+fetchMonthlyAccountList(new Date().getMonth() + 1);
 </script>
