@@ -1,24 +1,30 @@
 <template>
-  <div class="container container-shadow" style="justify-content: space-between">
+  <div
+    class="container container-shadow"
+    style="justify-content: space-between"
+  >
     <!-- 좌측 PieChart 컴포넌트 -->
     <div style="flex: 1; justify-content: center">
       <PieChart />
     </div>
     <!-- 중앙 섹션: 아이콘 및 수입/지출 정보 -->
-    <div style="flex-direction: column; flex: 1">
+    <div style="flex-direction: column; flex: 2">
       <!-- 아이콘 부분 -->
-      <div style="display: flex; justify-content: flex-end; margin: 0.5rem">
+      <div class="left-home-right-btn-wrap">
         <!-- 좌측 화살표 버튼 -->
         <button @click="prevMonth">
-          <i class="bi bi-chevron-double-left" style="cursor: pointer"></i>
+          <i
+            class="bi bi-chevron-double-left"
+            style="cursor: pointer; font-size: 2rem"
+          ></i>
         </button>
         <!-- 중앙 하우스 아이콘 버튼 -->
-        <button>
-          <i class="bi bi-house"></i>
+        <button @click="resetToCurrentMonth">
+          <i class="bi bi-house" style="font-size: 2rem"></i>
         </button>
         <!-- 우측 화살표 버튼 -->
         <button @click="nextMonth">
-          <i class="bi bi-chevron-double-right"></i>
+          <i class="bi bi-chevron-double-right" style="font-size: 2rem"></i>
         </button>
       </div>
       <!-- 수입/지출 정보 -->
@@ -85,55 +91,77 @@ import AccountList from '@/components/AccountList.vue';
 import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
 import { moneyFormat } from '@/utils/moneyFormat';
 
+
 // monthlyAccountStore (월별 데이터)
 const monthlyAccountListStore = useMonthlyAccountStore();
-const { fetchMonthlyAccountList, updateChartData } =
-  monthlyAccountListStore;
+const { fetchMonthlyAccountList, updateChartData } = monthlyAccountListStore;
 
 const monthlyAccountList = computed(() => monthlyAccountListStore.monthlyAccountList);
 const monthlyIncomeSum = computed(() => monthlyAccountListStore.monthlyIncomeSum);
 const monthlyExpenseSum = computed(() => monthlyAccountListStore.monthlyExpenseSum);
+
 /* 
  * 초기 데이터 로드: 월별 데이터 패치
  */
 onMounted(async () => {
-  await fetchMonthlyAccountList(selectedMonth.value);
+  await fetchMonthlyAccountList(selectedMonth.value, selectedYear.value);
 });
+
 
 /* 
  * 월 관리 
  */
 
-// 선택된 월 관리
+// 선택된 월과 년도 관리
 const selectedMonth = ref(new Date().getMonth() + 1);
+const selectedYear = ref(new Date().getFullYear());
 
-// 월 변경 핸들러: 월 변경 후 월별데이터 패치 메서드로 매개변수 전달 (데이터 로드)
+// 월 변경 핸들러
 const prevMonth = () => {
-  selectedMonth.value =
-    selectedMonth.value === 1 ? 12 : selectedMonth.value - 1;
-  fetchMonthlyAccountList(selectedMonth.value);
-  console.log('monthlyIncomeSum'+monthlyIncomeSum);
+  if (selectedMonth.value === 1) {
+    selectedMonth.value = 12;
+    selectedYear.value -= 1;
+  } else {
+    selectedMonth.value -= 1;
+  }
+  fetchMonthlyAccountList(selectedMonth.value, selectedYear.value);
+};
+
+const resetToCurrentMonth = () => {
+  selectedMonth.value = new Date().getMonth() + 1;
+  selectedYear.value = new Date().getFullYear();
+  fetchMonthlyAccountList(selectedMonth.value, selectedYear.value);
 };
 const nextMonth = () => {
-  selectedMonth.value =
-    selectedMonth.value === 12 ? 1 : selectedMonth.value + 1;
-  fetchMonthlyAccountList(selectedMonth.value);
+  if (selectedMonth.value === 12) {
+    selectedMonth.value = 1;
+    selectedYear.value += 1;
+  } else {
+    selectedMonth.value += 1;
+  }
+  fetchMonthlyAccountList(selectedMonth.value, selectedYear.value);
 };
 
+// 차트: 초기 데이터 로드
 const showExpenses = () => {
   updateChartData('expense');
 };
-
 const showIncomes = () => {
   updateChartData('income');
 };
 </script>
+
 <style>
+.left-home-right-btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.5rem;
+  color: rgb(96, 88, 76);
+}
 button {
   background: none;
   border: none;
   padding: 0;
-  font-size: 1rem;
   margin-right: 1rem;
   display: flex;
   align-items: center;

@@ -38,7 +38,9 @@
           </option>
         </select>
       </div>
-      <div style="align-items: center; font-size:1.3rem; color:#B7B7B7">|</div>
+      <div style="align-items: center; font-size: 1.3rem; color: #b7b7b7">
+        |
+      </div>
       <div id="title">
         <input
           type="text"
@@ -49,7 +51,9 @@
           required
         />
       </div>
-      <div style="align-items: center; font-size:1.3rem; color:#B7B7B7">|</div>
+      <div style="align-items: center; font-size: 1.3rem; color: #b7b7b7">
+        |
+      </div>
       <div>
         <input
           type="text"
@@ -105,14 +109,14 @@ const successCallback = (date = null) => {
   resetForm();
   fetchAccountList();
   fetchSummaryList();
-  if(date != null) fetchDailyAccountList(date);
+  if (date != null) fetchDailyAccountList(date);
 };
 
 const handleAddAccount = async () => {
   const payload = { ...form };
   const regex = /^[0-9]*$/;
-  
-  if(payload.date === '') {
+
+  if (payload.date === '') {
     alert('날짜를 선택해주세요.');
   } else if (payload.title === '' || payload.title.trim() === '') {
     alert('내용을 입력해주세요.');
@@ -124,10 +128,13 @@ const handleAddAccount = async () => {
     alert('카테고리를 선택해주세요.');
   } else if (!regex.test(payload.amount)) {
     alert('금액은 숫자만 입력 가능합니다.');
-  } else if (payload.amount === '' || payload.amount.trim() === '' 
-    || parseFloat(payload.amount) <= 0 || parseFloat(payload.amount) % 1 > 0) {
-    alert('금액은 1원 이상부터 입력 가능합니다. (소수점 불가)')  
-
+  } else if (
+    payload.amount === '' ||
+    payload.amount.trim() === '' ||
+    parseFloat(payload.amount) <= 0 ||
+    parseFloat(payload.amount) % 1 > 0
+  ) {
+    alert('금액은 1원 이상부터 입력 가능합니다. (소수점 불가)');
   } else {
     // 동적 생성
     const dynamicPayload = {
@@ -146,8 +153,8 @@ const handleAddAccount = async () => {
     }
 
     await addAccount(dynamicPayload, successCallback);
-    }
-  };
+  }
+};
 
 // + 눌러서 추가하면 입력창 리셋
 const resetForm = () => {
@@ -220,7 +227,7 @@ form {
 }
 
 .form-input-box {
-  border:none;
+  border: none;
 }
 .form-input-box:focus {
   box-shadow: none;

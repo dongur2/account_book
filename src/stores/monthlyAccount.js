@@ -6,17 +6,15 @@ export const useMonthlyAccountStore = defineStore(
   'monthlyAccountListStore',
   () => {
     const BASEURI = '/api/account';
+    const nowMonth = ref('');
     const state = reactive({
-      nowMonth: '',
       monthlyAccountList: [],
       filterCategory: null, // 필터 카테고리 추가
       monthlyExpenseSum: '',
       monthlyIncomeSum: '',
     });
 
-    // 월별 목록 조회: 최신순
-    const fetchMonthlyAccountList = async (nowMonth) => {
-      console.log('fetchs')
+    const fetchMonthlyAccountList = async (nowMonthValue, nowYearValue) => {
       try {
         const response = await axios.get(BASEURI);
 
@@ -24,8 +22,8 @@ export const useMonthlyAccountStore = defineStore(
           state.monthlyAccountList = response.data
             .filter(
               (account) =>
-                parseFloat(new Date(account.date).getMonth() + 1) ===
-                parseFloat(nowMonth)
+                parseFloat(new Date(account.date).getFullYear()) === parseInt(nowYearValue)
+                && parseFloat(new Date(account.date).getMonth() + 1) === parseFloat(nowMonthValue) 
             )
             .sort((a, b) => {
               if(new Date(a.date)+'' === new Date(b.date)+'') {
@@ -35,6 +33,10 @@ export const useMonthlyAccountStore = defineStore(
               }
             });
 
+          if (nowMonthValue !== 'Monthly') {
+            nowMonth.value = getMonthName(parseInt(nowMonthValue) - 1);
+          }
+          
         } else {
           alert('월별 수입/지출 목록 조회 실패');
         }
@@ -130,7 +132,30 @@ export const useMonthlyAccountStore = defineStore(
         .filter((account) => account.type === 'expense')
         .reduce((sum, account) => sum + parseFloat(account.amount), 0);
     });
+    
+    const currentMonth = computed(() => nowMonth.value);
 
+    const getMonthName = (monthIndex) => {
+      const monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ];
+      return monthNames[monthIndex];
+    };
+
+    const setCurrentMonth = (month) => {
+      nowMonth.value = month;
+    };
 
     return {
       fetchMonthlyAccountList,
@@ -140,7 +165,10 @@ export const useMonthlyAccountStore = defineStore(
       setFilterCategory,
       filteredAccountList,
       monthlyIncomeSum,
-      monthlyExpenseSum
+      monthlyExpenseSum,
+      currentMonth,
+      getMonthName,
+      setCurrentMonth,
     };
   }
 );
