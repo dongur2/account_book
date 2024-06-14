@@ -92,7 +92,7 @@ import { moneyFormat } from '@/utils/moneyFormat';
 
 // monthlyAccountStore (월별 데이터)
 const monthlyAccountListStore = useMonthlyAccountStore();
-const { fetchMonthlyAccountList } =
+const { fetchMonthlyAccountList, updateChartData } =
   monthlyAccountListStore;
 
 const monthlyAccountList = computed(() => monthlyAccountListStore.monthlyAccountList);
