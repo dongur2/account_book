@@ -28,14 +28,12 @@ export const useMonthlyAccountStore = defineStore(
                 parseFloat(nowMonth)
             )
             .sort((a, b) => {
-              if(new Date(a.date) === new Date(b.date)) {
+              if(new Date(a.date)+'' === new Date(b.date)+'') {
                 return parseFloat(b.id) - parseFloat(a.id); 
               } else {
                 return new Date(b.date) - new Date(a.date);
               }
             });
-
-            console.log('fetched:',state.monthlyAccountList) //month data
 
         } else {
           alert('월별 수입/지출 목록 조회 실패');
