@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
@@ -11,7 +11,7 @@ export const useMonthlyAccountStore = defineStore(
       monthlyAccountList: [],
       filterCategory: null, // 필터 카테고리 추가
       monthlyExpenseSum: '',
-      monthlyIncomeSum: ''
+      monthlyIncomeSum: '',
     });
 
     // 월별 목록 조회: 최신순
@@ -93,9 +93,17 @@ export const useMonthlyAccountStore = defineStore(
     const chartData = ref(getCategoryData('expense')); // 초기값은 expense 데이터
 
     const updateChartData = (type) => {
+      console.log(type)
       chartData.value = getCategoryData(type);
     };
 
+    watch(
+      () => state.monthlyAccountList,
+      () => {
+        chartData.value = getCategoryData('expense');
+      },
+      { deep: true }
+    );
 
     const setFilterCategory = (category) => {
       state.filterCategory = category;

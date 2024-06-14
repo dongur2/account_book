@@ -11,7 +11,6 @@ const { fetchMonthlyAccountList, updateChartData } = monthlyAccountStore;
 
 
 const pieChartRef = ref(null);
-const listRef = ref(accountList)
 
 let chartInstance = null;
 
@@ -21,7 +20,12 @@ onMounted(async () => {
   renderPieChart();
 });
 
-const monthlyAccountList = computed(() => monthlyAccountStore.monthlyAccountList)
+const monthlyAccountList = computed(() => monthlyAccountStore.monthlyAccountList);
+const chartData = computed(() => monthlyAccountStore.chartData);
+console.log('chartdata ',chartData)
+
+const listRef = ref(monthlyAccountList);
+
 
 watch(
   () => monthlyAccountStore.chartData,
@@ -40,7 +44,7 @@ function renderPieChart() {
     type: 'doughnut',
     data: monthlyAccountStore.chartData,
     options: {
-      responsive: false,
+      responsive: true,
       plugins: {
         legend: {
           position: 'bottom',
@@ -63,7 +67,7 @@ function renderPieChart() {
 }
 
 async function handleChartClick(label) {
-  await accountListStore.setFilterCategory(label);
+  await monthlyAccountStore.setFilterCategory(label);
 }
 </script>
 
