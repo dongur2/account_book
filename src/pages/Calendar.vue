@@ -1,20 +1,23 @@
 <template>
-  <FullCalendar class="container container-shadow"/>
+  <FullCalendar class="container container-shadow" />
   <InputIncomeExpense />
-  <div v-if="isDailyShow" class="container container-shadow" style="background-color:#fefefe">
+  <div
+    v-if="isDailyShow"
+    class="container container-shadow"
+    style="background-color: #fefefe; margin-bottom: 20px"
+  >
     <DailyAccountList :accounts="dailyAccountList" />
   </div>
 </template>
 
-
 <script setup>
-import FullCalendar from '@/components/calendar/FullCalendar.vue'
-import { computed } from 'vue'
-import { useCalendarAccountStore } from '@/stores/calendarAccount'
+import FullCalendar from '@/components/calendar/FullCalendar.vue';
+import { computed } from 'vue';
+import { useCalendarAccountStore } from '@/stores/calendarAccount';
 import { useAccountListStore } from '@/stores/account';
 
 import InputIncomeExpense from '@/components/InputIncomeExpense.vue';
-import DailyAccountList from '@/components/calendar/DailyAccountList.vue'
+import DailyAccountList from '@/components/calendar/DailyAccountList.vue';
 
 const calendarAccountStore = useCalendarAccountStore();
 const accountListStore = useAccountListStore();
