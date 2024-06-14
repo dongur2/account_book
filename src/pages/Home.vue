@@ -82,13 +82,8 @@ import { ref, onMounted, computed } from 'vue';
 import PieChart from '@/components/PieChart.vue';
 import InputIncomeExpense from '@/components/InputIncomeExpense.vue';
 import AccountList from '@/components/AccountList.vue';
-import { useAccountListStore } from '@/stores/account.js';
 import { useMonthlyAccountStore } from '@/stores/monthlyAccount';
 import { moneyFormat } from '@/utils/moneyFormat';
-
-// accountListStore (전체 데이터)
-// const accountListStore = useAccountListStore();
-// const { updateChartData } = accountListStore;
 
 // monthlyAccountStore (월별 데이터)
 const monthlyAccountListStore = useMonthlyAccountStore();
