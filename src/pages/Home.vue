@@ -56,16 +56,16 @@
       </div>
 
       <!-- 카테고리 및 금액 정보 -->
-      <hr class="my-3" />
+      <!-- <hr class="my-3" /> -->
       <!-- 카테고리 및 금액 정보 -->
-      <div style="flex: 2">
+      <!-- <div style="flex: 2">
         <div style="flex: 1; align-items: center; justify-content: center">
           category{{}}
         </div>
         <div style="flex: 1; align-items: center; justify-content: center">
           amount{{}}
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
